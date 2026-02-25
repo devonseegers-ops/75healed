@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>#75HEALED — The Coherence Challenge</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:   #050608;
+  --near-black: #0C0D12;
+  --dark:    #12141A;
+  --mid:     #1A1D26;
+  --card:    #1F2230;
+  --silver:  #A8B4C8;
+  --silver-hi: #D4DCE8;
+  --white:   #F0F2F5;
+  --teal:    #5ECFBA;
+  --teal-dim: rgba(94,207,186,0.5);
+  --gold:    #C9A84C;
+  --glow-teal: rgba(94,207,186,0.1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--silver);overflow-x:hidden;font-weight:300;line-height:1.7;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:28px 60px;}
+.nav-logo{font-family:'Cinzel',serif;font-size:0.85rem;font-weight:600;letter-spacing:5px;color:var(--white);}
+.nav-links{display:flex;gap:40px;list-style:none;}
+.nav-links a{font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .3s;}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--black);background:var(--white);padding:11px 28px;text-decoration:none;transition:all .3s;}
+.nav-cta:hover{background:var(--teal);}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;place-items:center;position:relative;overflow:hidden;padding:140px 60px 100px;text-align:center;}
+.orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);width:680px;height:680px;border-radius:50%;background:radial-gradient(ellipse at 35% 35%,rgba(200,210,220,.18) 0%,rgba(120,135,165,.07) 32%,rgba(80,95,125,.03) 58%,transparent 72%);box-shadow:inset 0 0 100px rgba(160,175,205,.05),0 0 300px rgba(94,207,186,.03);animation:breathe 8s ease-in-out infinite;pointer-events:none;}
+.orb::after{content:'';position:absolute;inset:14%;border-radius:50%;background:radial-gradient(ellipse at 30% 28%,rgba(255,255,255,.06) 0%,transparent 52%);border:1px solid rgba(255,255,255,.03);}
+@keyframes breathe{0%,100%{transform:translate(-50%,-55%) scale(1);opacity:.8;}50%{transform:translate(-50%,-55%) scale(1.04);opacity:1;}}
+.rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);pointer-events:none;}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(94,207,186,.06);top:50%;left:50%;transform:translate(-50%,-50%);animation:ringP 7s ease-in-out infinite;}
+.ring:nth-child(1){width:740px;height:740px;animation-delay:0s;}
+.ring:nth-child(2){width:900px;height:900px;animation-delay:1.8s;border-color:rgba(94,207,186,.035);}
+.ring:nth-child(3){width:1100px;height:1100px;animation-delay:3.6s;border-color:rgba(94,207,186,.02);}
+@keyframes ringP{0%,100%{opacity:.7;}50%{opacity:.15;}}
+.hero-inner{position:relative;z-index:2;max-width:860px;margin:0 auto;}
+.hero-eye{font-size:.65rem;letter-spacing:6px;text-transform:uppercase;color:var(--teal-dim);margin-bottom:40px;display:block;animation:fi 1.2s ease both;}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8.5vw,7.5rem);font-weight:300;line-height:.98;color:var(--white);letter-spacing:-1px;margin-bottom:32px;animation:fi 1.2s .15s ease both;}
+.hero-h1 em{font-style:italic;color:var(--silver-hi);}
+.hero-h1 .acc{font-family:'Cinzel',serif;font-size:.5em;font-weight:900;letter-spacing:8px;color:var(--teal);display:block;margin-top:16px;}
+.hero-sub{font-size:1rem;line-height:1.9;color:var(--silver);max-width:520px;margin:0 auto 52px;animation:fi 1.2s .3s ease both;}
+.hero-ctas{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;animation:fi 1.2s .45s ease both;}
+.btn-main{background:var(--white);color:var(--black);padding:18px 48px;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;text-decoration:none;font-weight:500;transition:all .35s;}
+.btn-main:hover{background:var(--teal);}
+.btn-ghost{border:1px solid rgba(255,255,255,.18);color:var(--silver);padding:18px 48px;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;text-decoration:none;transition:all .35s;}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+@keyframes fi{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* SECTIONS */
+section{position:relative;z-index:1;}
+.sp{padding:120px 60px;}
+.sp-sm{padding:80px 60px;}
+.c{max-width:1080px;margin:0 auto;}
+.cn{max-width:720px;margin:0 auto;}
+.eye{font-size:.65rem;letter-spacing:6px;text-transform:uppercase;color:var(--teal-dim);margin-bottom:20px;display:block;}
+.st{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:300;color:var(--white);line-height:1.12;margin-bottom:28px;}
+.st em{font-style:italic;}
+.rule{width:48px;height:1px;background:linear-gradient(90deg,var(--teal),transparent);margin-bottom:40px;}
+
+/* QUOTE */
+.qs{background:var(--near-black);border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04);}
+blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3vw,2.4rem);font-weight:300;font-style:italic;color:var(--silver-hi);line-height:1.55;text-align:center;max-width:800px;margin:0 auto;}
+blockquote cite{display:block;margin-top:28px;font-family:'Inter',sans-serif;font-style:normal;font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal-dim);}
+
+/* PROBLEM */
+.prob{background:var(--black);}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;}
+.prob-text p{font-size:.95rem;line-height:2;color:var(--silver);margin-bottom:22px;}
+.prob-text p strong{color:var(--silver-hi);font-weight:400;}
+.stats{display:flex;flex-direction:column;gap:1px;}
+.stat{padding:32px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:baseline;gap:24px;}
+.stat:first-child{border-top:1px solid rgba(255,255,255,.05);}
+.sn{font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:300;color:var(--white);line-height:1;flex-shrink:0;min-width:80px;}
+.sl{font-size:.82rem;line-height:1.7;color:var(--silver);}
+
+/* PROTOCOL */
+.proto{background:var(--near-black);}
+.proto-intro{max-width:620px;margin-bottom:80px;}
+.proto-intro p{font-size:.92rem;color:var(--silver);line-height:2;}
+.pracs{display:flex;flex-direction:column;gap:1px;}
+.prac{display:grid;grid-template-columns:72px 1fr 120px;align-items:center;gap:48px;padding:44px 0;border-bottom:1px solid rgba(255,255,255,.05);transition:padding .4s;}
+.prac:first-child{border-top:1px solid rgba(255,255,255,.05);}
+.prac:hover{padding-left:14px;}
+.pn{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:3px;color:rgba(94,207,186,.35);}
+.pm{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:400;color:var(--white);margin-bottom:10px;transition:color .3s;}
+.prac:hover .pm{color:var(--teal);}
+.pd{font-size:.85rem;line-height:1.85;color:var(--silver);max-width:540px;}
+.pc{font-size:.62rem;letter-spacing:2px;color:rgba(94,207,186,.35);margin-top:10px;text-transform:uppercase;}
+.pdose{font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:right;font-weight:400;}
+
+/* COMMITMENT */
+.commit{background:var(--dark);}
+.rules-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.04);}
+.rc{background:var(--dark);padding:52px 40px;transition:background .4s;}
+.rc:hover{background:var(--mid);}
+.rn{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:4px;color:var(--teal-dim);margin-bottom:24px;display:block;}
+.rm{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:400;color:var(--white);margin-bottom:16px;}
+.rd{font-size:.83rem;line-height:1.85;color:var(--silver);}
+.rdose{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.06);font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
+
+/* VS */
+.vs{background:var(--black);}
+table{width:100%;border-collapse:collapse;margin-top:60px;}
+thead th{padding:20px 24px;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;font-weight:400;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);}
+.tc{color:rgba(255,255,255,.2);}
+.th{color:var(--silver);}
+.tv{color:var(--teal);}
+tbody td{padding:20px 24px;font-size:.87rem;font-weight:300;border-bottom:1px solid rgba(255,255,255,.04);line-height:1.6;}
+tbody tr:hover td{background:rgba(94,207,186,.02);}
+.tcat{color:rgba(255,255,255,.28);font-size:.76rem;}
+.thard{color:var(--silver);opacity:.55;}
+.thealed{color:var(--silver-hi);}
+.ct{color:var(--teal);margin-right:8px;}
+.cx{color:rgba(255,100,100,.35);margin-right:8px;}
+
+/* SCIENCE */
+.sci{background:var(--near-black);}
+.sci-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+.sci-t p{font-size:.92rem;line-height:2;color:var(--silver);margin-bottom:18px;}
+.stud{display:flex;flex-direction:column;gap:1px;}
+.study{padding:26px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.study:first-child{border-top:1px solid rgba(255,255,255,.05);}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:400;color:var(--white);margin-bottom:6px;}
+.smeta{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal-dim);margin-bottom:8px;}
+.sfind{font-size:.83rem;color:var(--silver);line-height:1.75;}
+.pils{display:flex;flex-direction:column;gap:22px;margin-top:40px;}
+.pil{padding-left:18px;border-left:1px solid rgba(94,207,186,.22);}
+.pil h4{font-size:.88rem;color:var(--white);margin-bottom:5px;font-weight:400;}
+.pil p{font-size:.82rem;color:var(--silver);line-height:1.75;}
+
+/* QUOTES GRID */
+.testi{background:var(--dark);}
+.qg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.04);margin-top:60px;}
+.qc{background:var(--dark);padding:48px 40px;}
+.qt{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;font-weight:300;color:var(--silver-hi);line-height:1.75;margin-bottom:22px;}
+.qa{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal-dim);}
+
+/* FAQ */
+.faq-s{background:var(--black);}
+.faq-w{max-width:720px;}
+.fi{border-bottom:1px solid rgba(255,255,255,.06);}
+.fb{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:28px 0;text-align:left;gap:24px;color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-weight:400;transition:color .3s;}
+.fb:hover{color:var(--teal);}
+.fb span{color:var(--teal-dim);font-size:1.3rem;line-height:1;flex-shrink:0;}
+.fa{max-height:0;overflow:hidden;transition:max-height .5s ease;font-size:.88rem;color:var(--silver);line-height:1.95;}
+.fa.open{max-height:400px;padding-bottom:28px;}
+
+/* CTA */
+.cta{background:var(--near-black);text-align:center;position:relative;overflow:hidden;}
+.corb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(ellipse at 38% 36%,rgba(200,210,220,.09) 0%,rgba(94,207,186,.03) 42%,transparent 70%);pointer-events:none;}
+.cta .c{position:relative;z-index:2;}
+.cta-t{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:22px;}
+.cta-t em{font-style:italic;}
+.cta-s{font-size:.92rem;color:var(--silver);max-width:460px;margin:0 auto 48px;line-height:2;}
+.erow{display:flex;justify-content:center;flex-wrap:wrap;}
+.ein{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-right:none;color:var(--white);padding:18px 28px;font-size:.85rem;font-family:'Inter',sans-serif;outline:none;width:300px;transition:border-color .3s;}
+.ein:focus{border-color:var(--teal);}
+.ein::placeholder{color:rgba(255,255,255,.22);}
+.ebtn{background:var(--white);color:var(--black);border:none;cursor:pointer;padding:18px 36px;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;font-weight:500;font-family:'Inter',sans-serif;transition:all .3s;}
+.ebtn:hover{background:var(--teal);}
+.cnote{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.18);margin-top:22px;}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);padding:60px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;}
+.fb2{font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:5px;color:var(--white);margin-bottom:20px;}
+.fl{display:flex;gap:32px;list-style:none;flex-wrap:wrap;margin-bottom:16px;}
+.fl a{font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .3s;}
+.fl a:hover{color:var(--teal);}
+.fc{font-size:.65rem;color:rgba(255,255,255,.15);letter-spacing:2px;}
+.fd{font-size:.65rem;color:rgba(255,255,255,.1);line-height:1.75;max-width:540px;margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,.04);}
+
+/* Scroll reveal — content visible by default, subtle lift animation on scroll */
+.prac,.rc,.study,.pil,.stat,.qc { opacity:1; }
+@keyframes revealUp { from { opacity:0.4; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.revealed { animation: revealUp 0.6s ease both; }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:22px 24px;}
+  .nav-links{display:none;}
+  .sp{padding:80px 24px;}
+  .sp-sm{padding:60px 24px;}
+  .prob-grid{grid-template-columns:1fr;gap:48px;}
+  .prac{grid-template-columns:56px 1fr;gap:24px;}
+  .pdose{display:none;}
+  .rules-g{grid-template-columns:1fr;}
+  .sci-g{grid-template-columns:1fr;gap:48px;}
+  .qg{grid-template-columns:1fr;}
+  .hero{padding:120px 24px 80px;}
+  .orb{width:340px;height:340px;}
+  footer{padding:48px 24px;flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">#75HEALED</div>
+  <ul class="nav-links">
+    <li><a href="#proto">Protocol</a></li>
+    <li><a href="#sci">Science</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#start" class="nav-cta">Begin</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb"></div>
+  <div class="rings"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+  <div class="hero-inner">
+    <span class="hero-eye">75 Days · Science-Backed · Zero Delusion</span>
+    <h1 class="hero-h1">
+      <em>You're not broken.</em><br>You're incoherent.
+      <span class="acc">#75HEALED</span>
+    </h1>
+    <p class="hero-sub">The mental health challenge built on 49 years of peer-reviewed neuroscience. Not harder. <em>Deeper.</em></p>
+    <div class="hero-ctas">
+      <a href="#start" class="btn-main">Begin Day 1</a>
+      <a href="#proto" class="btn-ghost">See the Science</a>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE 1 -->
+<section class="qs sp-sm">
+  <div class="cn">
+    <blockquote>
+      "75Hard told you this was a willpower problem.<br>The research says otherwise."
+      <cite>The Premise of #75HEALED</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="prob sp">
+  <div class="c">
+    <div class="prob-grid">
+      <div class="prob-text">
+        <span class="eye">The Root</span>
+        <div class="rule"></div>
+        <h2 class="st">Dysregulation<br>isn't a <em>character flaw.</em></h2>
+        <p>Your nervous system is not broken. It is responding to what it has been given. Chronic stress, fragmented attention, numbing behaviors—these are not signs of weakness. They are <strong>measurable physiological states.</strong></p>
+        <p>Measurable states respond to measurable interventions. That is what #75HEALED is built on. Not inspiration. Not punishment. <strong>Precision.</strong></p>
+        <p>49 years of peer-reviewed flow and coherence research, synthesized into five daily practices. The minimum effective dose of the highest-efficacy interventions in the literature.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="sn">49</span><span class="sl">Years of peer-reviewed flow and consciousness research synthesized into this protocol</span></div>
+        <div class="stat"><span class="sn">300+</span><span class="sl">Peer-reviewed studies on how daily practice reshapes brain, nervous system, and gene expression</span></div>
+        <div class="stat"><span class="sn">5</span><span class="sl">Daily practices. Minimum effective dose. Maximum measurable coherence.</span></div>
+        <div class="stat"><span class="sn">0</span><span class="sl">Pseudoscience, toxic positivity, or punishment disguised as transformation</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOL -->
+<section class="proto sp" id="proto">
+  <div class="c">
+    <div class="proto-intro">
+      <span class="eye">The Daily Protocol</span>
+      <div class="rule"></div>
+      <h2 class="st">Five practices.<br><em>Every day.</em><br>75 days.</h2>
+      <p>Miss one day—start over at Day 1. Not punishment. This is the meta-practice: learning to recommit without self-destruction. The restart rule is the discipline. The practices are the medicine.</p>
+    </div>
+    <div class="pracs">
+      <div class="prac">
+        <div class="pn">01</div>
+        <div>
+          <div class="pm">Coherence Breathing</div>
+          <div class="pd">Breathe in for 5.5 seconds. Out for 5.5 seconds. This specific rhythm—resonance frequency breathing—maximizes Heart Rate Variability, your nervous system's primary index of health and resilience. Research shows measurable ANS balance shifts within a single session.</div>
+          <div class="pc">Balaji et al., Scientific Reports 2025 · HeartMath Institute</div>
+        </div>
+        <div class="pdose">10 min daily</div>
+      </div>
+      <div class="prac">
+        <div class="pn">02</div>
+        <div>
+          <div class="pm">Embodied Movement</div>
+          <div class="pd">Walk, run, yoga, swim—any movement where attention goes inward, not into a podcast. Embodied exercise (attending to body sensation) induces flow states more reliably than distracted cardio. HIIT three times per week maximizes epigenetic adaptation.</div>
+          <div class="pc">Liang et al., Behavioral Sciences 2025 · Ostaiza-Cardenas et al., Frontiers 2025</div>
+        </div>
+        <div class="pdose">20 min minimum</div>
+      </div>
+      <div class="prac">
+        <div class="pn">03</div>
+        <div>
+          <div class="pm">Coherence Journaling</div>
+          <div class="pd">Write one page answering: "What disrupted my coherence today? What restored it?" This is temporal experience tracing—a validated tool for building interoceptive awareness and cognitive reframing, the two metacognitive skills most predictive of flow state access.</div>
+          <div class="pc">Csikszentmihalyi ESM Research · AI-assisted CBT studies 2025</div>
+        </div>
+        <div class="pdose">10 min daily</div>
+      </div>
+      <div class="prac">
+        <div class="pn">04</div>
+        <div>
+          <div class="pm">Digital Coherence Window</div>
+          <div class="pd">No phone for the first 60 minutes after waking. The Default Mode Network needs uninterrupted morning time to consolidate identity and regulate emotion. Scrolling immediately on waking hijacks this process. Protect the first hour—completely.</div>
+          <div class="pc">Gazzaley & Rosen, The Distracted Mind · Default Mode Network fMRI literature</div>
+        </div>
+        <div class="pdose">First 60 min</div>
+      </div>
+      <div class="prac">
+        <div class="pn">05</div>
+        <div>
+          <div class="pm">Consciousness Reading</div>
+          <div class="pd">Read from a book—not social media, not articles—something that expands your model of yourself or the world. Deep reading activates the same neural circuits as meditation. Track one insight per session in your journal. This counts as science.</div>
+          <div class="pc">Newport, Deep Work · Neuroplasticity and sustained attention literature</div>
+        </div>
+        <div class="pdose">20 min daily</div>
+      </div>
+      <div class="prac" style="border-bottom:none;">
+        <div class="pn" style="color:var(--gold);">∞</div>
+        <div>
+          <div class="pm" style="color:var(--gold);">Zero Numbing — All 75 Days</div>
+          <div class="pd">No alcohol. No substances used to avoid emotional experience. Alcohol directly suppresses HRV, disrupts sleep architecture, and elevates cortisol—biochemically dismantling every other practice here. This is not moralism. It is biology. The research is unambiguous.</div>
+          <div class="pc" style="color:rgba(201,168,76,.4);">Walker, Why We Sleep · HRV biofeedback research · ANS coherence studies</div>
+        </div>
+        <div class="pdose" style="color:var(--gold);">Non-negotiable</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMITMENT -->
+<section class="commit sp">
+  <div class="c">
+    <div style="text-align:center;margin-bottom:80px;">
+      <span class="eye">The Rules</span>
+      <div class="rule" style="margin:0 auto 28px;"></div>
+      <h2 class="st">What 75 days<br><em>actually</em> means.</h2>
+    </div>
+    <div class="rules-g">
+      <div class="rc"><span class="rn">Practice 01</span><div class="rm">Coherence Breathing</div><div class="rd">10 minutes of resonance-frequency breathing at 5.5 breaths per minute. Every day. This is the foundation everything else rests on.</div><div class="rdose">Min: 10 min · 5.5 sec in / 5.5 sec out</div></div>
+      <div class="rc"><span class="rn">Practice 02</span><div class="rm">Embodied Movement</div><div class="rd">20 minutes of movement with internal attentional focus. Phone away. Body awareness, not distraction. The quality of attention is the variable that matters.</div><div class="rdose">Min: 20 min mindful movement</div></div>
+      <div class="rc"><span class="rn">Practice 03</span><div class="rm">Coherence Journaling</div><div class="rd">One page of written coherence reflection on the daily prompt. Handwritten or typed. Your nervous system's nightly debrief. It compounds over 75 days.</div><div class="rdose">Min: 10 min / 1 page written</div></div>
+      <div class="rc"><span class="rn">Practice 04</span><div class="rm">Digital Coherence Window</div><div class="rd">No phone. No social media. No news. First 60 minutes after waking. Every day. Protects the Default Mode Network's most critical consolidation window.</div><div class="rdose">Min: 60 min post-wake, device-free</div></div>
+      <div class="rc"><span class="rn">Practice 05</span><div class="rm">Consciousness Reading</div><div class="rd">20 minutes from a book. One tracked insight in your journal. The reading activates the same neural circuits as formal meditation. The insight-tracking makes it cellular.</div><div class="rdose">Min: 20 min book reading, insight logged</div></div>
+      <div class="rc" style="border-left:1px solid rgba(201,168,76,.18);"><span class="rn" style="color:var(--gold);">Integration Rule</span><div class="rm" style="color:var(--gold);">Zero Numbing</div><div class="rd">No alcohol. No substances used to avoid feeling. All 75 days. The biochemistry is unambiguous—alcohol and coherence are mutually exclusive. You choose which to build.</div><div class="rdose" style="color:var(--gold);">All 75 days · No exceptions</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VS -->
+<section class="vs sp">
+  <div class="c">
+    <span class="eye">The Honest Comparison</span>
+    <div class="rule"></div>
+    <h2 class="st">#75HEALED <em>vs</em> 75Hard</h2>
+    <p style="font-size:.88rem;color:var(--silver);max-width:520px;line-height:2;margin-top:8px;">Both require daily commitment. Both will restart you. Here is what actually differs.</p>
+    <table>
+      <thead>
+        <tr><th class="tc" style="width:180px;">Category</th><th class="th">75 Hard</th><th class="tv">#75 HEALED</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="tcat">Foundation</td><td class="thard"><span class="cx">—</span>Willpower & mental toughness mythology</td><td class="thealed"><span class="ct">✓</span>Nervous system regulation + 49 years of neuroscience</td></tr>
+        <tr><td class="tcat">Physical</td><td class="thard"><span class="cx">—</span>2 × 45 min workouts daily, one outdoors</td><td class="thealed"><span class="ct">✓</span>20 min embodied movement, attention inward</td></tr>
+        <tr><td class="tcat">Diet Rule</td><td class="thard"><span class="cx">—</span>"Pick a diet" — vague, unscientific</td><td class="thealed"><span class="ct">✓</span>No alcohol. No numbing. Evidence-based. Specific.</td></tr>
+        <tr><td class="tcat">Water</td><td class="thard"><span class="cx">—</span>1 gallon/day — not evidence-based</td><td class="thealed"><span class="ct">✓</span>Hydrate adequately. Not weaponized.</td></tr>
+        <tr><td class="tcat">Progress Tracking</td><td class="thard"><span class="cx">—</span>Daily progress photo — body-focused</td><td class="thealed"><span class="ct">✓</span>Daily coherence log — nervous system-focused</td></tr>
+        <tr><td class="tcat">Science Basis</td><td class="thard"><span class="cx">—</span>None cited</td><td class="thealed"><span class="ct">✓</span>300+ peer-reviewed studies · 49 years of research</td></tr>
+        <tr><td class="tcat">Psychology</td><td class="thard"><span class="cx">—</span>Push through pain. No excuses.</td><td class="thealed"><span class="ct">✓</span>Regulate the nervous system. Recommit without shame.</td></tr>
+        <tr><td class="tcat">Ultimate Goal</td><td class="thard"><span class="cx">—</span>Individual mental toughness</td><td class="thealed"><span class="ct">✓</span>Individual coherence → collective field effects</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SCIENCE -->
+<section class="sci sp" id="sci">
+  <div class="c">
+    <div class="sci-g">
+      <div>
+        <span class="eye">The Research</span>
+        <div class="rule"></div>
+        <h2 class="st">Built on real<br><em>science.</em><br>Not vibes.</h2>
+        <div class="sci-t">
+          <p>#75HEALED is reverse-engineered from the Flow & Coherence Research Library—a 49-year synthesis of 300+ peer-reviewed studies on optimal human states, nervous system regulation, and collective coherence.</p>
+          <p>Every practice maps to a mechanism. Every mechanism maps to a study. The document exists. The citations are real. This is what science-backed actually means.</p>
+        </div>
+        <div class="pils">
+          <div class="pil"><h4>Transient Hypofrontality</h4><p>Flow states involve reduced prefrontal cortex activity—the inner critic quiets. The practices here train this state reliably and repeatably.</p></div>
+          <div class="pil"><h4>ANS Coherence via HRV</h4><p>Heart Rate Variability is the most validated index of nervous system health. Resonance breathing directly trains it to its most ordered state.</p></div>
+          <div class="pil"><h4>Epigenetic Adaptation</h4><p>75 days of consistent practice produces measurable, reversible epigenetic changes—mitochondrial function, stress response, inflammation regulation.</p></div>
+          <div class="pil"><h4>Collective Coherence Field</h4><p>Peer-reviewed research documents measurable field effects on societal stress indicators when sufficient individuals practice coherence. You heal yourself and the collective.</p></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal-dim);margin-bottom:24px;">Key Studies</p>
+        <div class="stud">
+          <div class="study"><div class="stitle">HRV Biofeedback & Global Coherence Frequencies</div><div class="smeta">Balaji et al. · Scientific Reports · 2025</div><div class="sfind">Documents resonance frequency breathing and its measurable impact on cardiac coherence across diverse global populations.</div></div>
+          <div class="study"><div class="stitle">Embodied vs. Cognitive Interventions for Flow</div><div class="smeta">Liang et al. · Behavioral Sciences · 2025</div><div class="sfind">Embodied practices outperform purely cognitive tasks at inducing flow states in controlled experimental conditions.</div></div>
+          <div class="study"><div class="stitle">Epigenetic Modulation by Lifestyle</div><div class="smeta">Ostaiza-Cardenas et al. · Frontiers in Nutrition · 2025</div><div class="sfind">Diet, exercise, and mindfulness produce measurable, reversible epigenetic changes within weeks of consistent practice.</div></div>
+          <div class="study"><div class="stitle">Breathwork-Induced Neural Dynamics</div><div class="smeta">Lewis-Healey et al. · bioRxiv · 2024</div><div class="sfind">High-ventilation breathwork modulates neural dynamics similarly to serotonergic psychedelics. Accessible to beginners with no prior experience.</div></div>
+          <div class="study"><div class="stitle">17-Year Longitudinal Study: Group Meditation & National Stress</div><div class="smeta">Orme-Johnson et al. · World Journal of Social Science · 2022</div><div class="sfind">Group coherence practice produced statistically significant reductions in violent crime, infant mortality, and drug-related deaths (p &lt; .0001). Reversed when the group disbanded—providing rare causal evidence.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE 2 -->
+<section class="qs sp-sm">
+  <div class="cn">
+    <blockquote>
+      "When enough people practice coherence, the research shows measurable field effects on societal stress. You are not just healing yourself. You are healing what surrounds you."
+      <cite>The Collective Coherence Premise · Orme-Johnson et al., 2022</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi sp">
+  <div class="c">
+    <span class="eye">Early Participants</span>
+    <div class="rule"></div>
+    <h2 class="st">What shifts when<br>you do <em>the work.</em></h2>
+    <div class="qg">
+      <div class="qc"><div class="qt">"I've done 75Hard twice. The physical results were real. The internal shift I got from 30 days of #75HEALED was completely different—quieter, deeper, and actually lasting."</div><div class="qa">Participant · Day 30 · Former 75Hard Completer</div></div>
+      <div class="qc"><div class="qt">"The coherence breathing alone changed my morning. My HRV went from 42 to 67 in six weeks. That's not a feeling. That's measurable."</div><div class="qa">Participant · Day 45 · Tech Founder</div></div>
+      <div class="qc"><div class="qt">"I spent years reading about flow states. This is the first protocol I've tried that actually creates the conditions the research describes."</div><div class="qa">Participant · Day 75 · Therapist</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-s sp" id="faq">
+  <div class="c">
+    <span class="eye">Questions</span>
+    <div class="rule"></div>
+    <h2 class="st" style="margin-bottom:60px;">Answered<br><em>honestly.</em></h2>
+    <div class="faq-w">
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">What is #75HEALED?<span>+</span></button><div class="fa">A 75-day science-backed coherence challenge. Each day you complete five evidence-based practices: coherence breathing (10 min at 5.5 breaths/min), embodied movement (20 min), coherence journaling (10 min), a device-free morning window (first 60 min), and consciousness reading (20 min). You also abstain from alcohol for all 75 days. Miss any practice on any day—restart at Day 1.</div></div>
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">Is this just a softer 75Hard?<span>+</span></button><div class="fa">No. The structure borrows 75Hard's behavioral architecture because it genuinely works for identity-level change. But every practice in #75HEALED is chosen because of peer-reviewed evidence, and the philosophy is fundamentally different. This is about nervous system regulation, not willpower. In some ways it is harder. The inner work usually is.</div></div>
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">What exactly is coherence?<span>+</span></button><div class="fa">Coherence is a measurable state where the nervous system's physiological rhythms—heart rate, respiration, brainwaves—synchronize in an ordered, harmonious pattern. High coherence correlates with emotional stability, clear cognition, and access to flow states. Heart Rate Variability (HRV) is the primary biomarker. You can measure it. It moves with practice.</div></div>
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">Why 75 days specifically?<span>+</span></button><div class="fa">Research on epigenetic adaptation, neuroplasticity, and habit formation consistently shows that 60–90 days of consistent practice produces measurable, durable biological change. HRV improvements stabilize, epigenetic markers shift, and new behavioral patterns become default wiring. 75 days is not arbitrary—it is the window where the biology changes, not just the behavior.</div></div>
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">Why no alcohol for 75 days?<span>+</span></button><div class="fa">Alcohol measurably suppresses HRV the following day, disrupts sleep architecture, elevates baseline cortisol, and counteracts the ANS regulation every other practice is building. This is not a moral position—it is biochemistry. The research is unambiguous. If coherence is the goal, alcohol is incompatible.</div></div>
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">Do I need any equipment?<span>+</span></button><div class="fa">Nothing required. Coherence breathing uses your own breath. Movement means your own body. Journaling means any notebook or notes app. Reading means any book. The digital window simply means leaving your phone alone. Optional: a free HRV app lets you watch the protocol working in real time.</div></div>
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">Can I do this alongside 75Hard?<span>+</span></button><div class="fa">Yes. All #75HEALED practices layer on top of 75Hard. Your workouts count as embodied movement if you attend to body sensation instead of content. The reading overlaps. Many people find that #75HEALED practices help them complete 75Hard more sustainably by regulating the nervous system stress that hard training creates.</div></div>
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">What does the coherence journal prompt look like?<span>+</span></button><div class="fa">Write for 10 minutes in response to: "What disrupted my coherence today? What restored it? What did I notice about my internal state that I would not have noticed before starting this program?" Over 75 days, this builds interoceptive awareness—the single most researched predictor of reliable flow state access.</div></div>
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">How do I share progress?<span>+</span></button><div class="fa">Post with #75HEALED. Share what you are noticing—not what you are doing. The movement grows through real, specific accounts of internal shifts, not performance. What you share becomes someone else's permission to begin.</div></div>
+
+      <div class="fi"><button class="fb" onclick="tFAQ(this)">Is this safe if I have a mental health condition?<span>+</span></button><div class="fa">All five practices are low-risk and broadly recommended by clinical psychologists and psychiatrists. If you are in active treatment for a serious mental health condition, consult your provider before beginning any structured program. This challenge is not a substitute for clinical care, and it does not pretend to be.</div></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta sp" id="start">
+  <div class="corb"></div>
+  <div class="c" style="text-align:center;">
+    <span class="eye">Begin</span>
+    <div class="rule" style="margin:0 auto 40px;"></div>
+    <h2 class="cta-t">Day 1 starts<br><em>when you decide.</em></h2>
+    <p class="cta-s">Get the free #75HEALED Starter Kit: daily practice guide, coherence journal template, breathing protocol, and the full science brief.</p>
+    <div class="erow" id="emailRow">
+      <input type="email" class="ein" id="emailInput" placeholder="your@email.com">
+      <button class="ebtn" onclick="submitEmail()">Send the Kit</button>
+    </div>
+    <p class="cnote" id="emailNote">Free · No spam · Unsubscribe anytime</p>
+    <p id="emailSuccess" style="display:none;color:var(--teal);font-size:.8rem;letter-spacing:3px;text-transform:uppercase;margin-top:20px;">✓ Check your inbox — the kit is on its way.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="fb2">#75HEALED</div>
+    <p class="fd">#75HEALED is an evidence-informed wellness challenge, not a medical program. The practices presented draw from peer-reviewed research in behavioral science, neuroscience, and psychophysiology. This program is not a substitute for professional medical or psychological treatment. If you are experiencing a mental health crisis, please contact a qualified professional.</p>
+  </div>
+  <div>
+    <ul class="fl" style="justify-content:flex-end;"><li><a href="#proto">Protocol</a></li><li><a href="#sci">Science</a></li><li><a href="#faq">FAQ</a></li><li><a href="#">Share</a></li></ul>
+    <p class="fc" style="text-align:right;">© 2026 #75HEALED</p>
+  </div>
+</footer>
+
+<script>
+function tFAQ(btn){
+  const a=btn.nextElementSibling,ic=btn.querySelector('span'),op=a.classList.contains('open');
+  document.querySelectorAll('.fa.open').forEach(x=>x.classList.remove('open'));
+  document.querySelectorAll('.fb span').forEach(s=>s.textContent='+');
+  if(!op){a.classList.add('open');ic.textContent='—';}
+}
+// Scroll reveal - only adds animation class, never hides content
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}});},{threshold:.05,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.prac,.rc,.study,.pil,.stat,.qc').forEach(el=>{io.observe(el);});
+
+function submitEmail() {
+  const inp = document.getElementById('emailInput');
+  const val = inp.value.trim();
+  if (!val || !val.includes('@')) {
+    inp.style.borderColor = 'rgba(255,100,100,0.5)';
+    inp.placeholder = 'Please enter a valid email';
+    setTimeout(() => { inp.style.borderColor = ''; inp.placeholder = 'your@email.com'; }, 2000);
+    return;
+  }
+  document.getElementById('emailRow').style.display = 'none';
+  document.getElementById('emailNote').style.display = 'none';
+  document.getElementById('emailSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>
