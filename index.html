@@ -212,7 +212,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
     <li><a href="#sci">Science</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
-  <a href="#start" class="nav-cta">Begin</a>
+  <a href="https://www.skool.com/devons-group-8553/about" class="nav-cta" target="_blank">Join</a>
 </nav>
 
 <!-- HERO -->
@@ -220,15 +220,15 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   <div class="orb"></div>
   <div class="rings"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
   <div class="hero-inner">
-    <span class="hero-eye">75 Days · Science-Backed · Zero Delusion</span>
+    <span class="hero-eye">A 75-Day Coherence Challenge</span>
     <h1 class="hero-h1">
-      <em>You're not broken.</em><br>You're incoherent.
+      The world is chaotic.<br><em>You don't need to be.</em>
       <span class="acc">#75HEALED</span>
     </h1>
-    <p class="hero-sub">The mental health challenge built on 49 years of peer-reviewed neuroscience. Not harder. <em>Deeper.</em></p>
+    <p class="hero-sub">Your nervous system is running on survival mode. 75 days of evidence-based practice to regulate, restore, and rebuild your capacity from the inside out.</p>
     <div class="hero-ctas">
-      <a href="#start" class="btn-main">Begin Day 1</a>
-      <a href="#proto" class="btn-ghost">See the Science</a>
+      <a href="https://www.skool.com/devons-group-8553/about" class="btn-main" target="_blank">Join the Community</a>
+      <a href="https://devonseegers-ops.github.io/75healed-tracker/" class="btn-ghost" target="_blank">Start the Tracker</a>
     </div>
   </div>
 </section>
@@ -473,13 +473,12 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
     <span class="eye">Begin</span>
     <div class="rule" style="margin:0 auto 40px;"></div>
     <h2 class="cta-t">Day 1 starts<br><em>when you decide.</em></h2>
-    <p class="cta-s">Get the free #75HEALED Starter Kit: daily practice guide, coherence journal template, breathing protocol, and the full science brief.</p>
-    <div class="erow" id="emailRow">
-      <input type="email" class="ein" id="emailInput" placeholder="your@email.com">
-      <button class="ebtn" onclick="submitEmail()">Send the Kit</button>
+    <p class="cta-s">Join the #75HEALED community — get accountability, daily check-ins, and train alongside hundreds of people building nervous system capacity every day.</p>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:40px;">
+      <a href="https://www.skool.com/devons-group-8553/about" class="btn-main" target="_blank" style="display:inline-block;">Join the Community →</a>
+      <a href="https://devonseegers-ops.github.io/75healed-tracker/" class="btn-ghost" target="_blank" style="display:inline-block;">Start the Daily Tracker</a>
     </div>
-    <p class="cnote" id="emailNote">Free · No spam · Unsubscribe anytime</p>
-    <p id="emailSuccess" style="display:none;color:var(--teal);font-size:.8rem;letter-spacing:3px;text-transform:uppercase;margin-top:20px;">✓ Check your inbox — the kit is on its way.</p>
+    <p class="cnote" style="margin-top:24px;">Free to join · No spam · Just the work</p>
   </div>
 </section>
 
@@ -490,7 +489,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
     <p class="fd">#75HEALED is an evidence-informed wellness challenge, not a medical program. The practices presented draw from peer-reviewed research in behavioral science, neuroscience, and psychophysiology. This program is not a substitute for professional medical or psychological treatment. If you are experiencing a mental health crisis, please contact a qualified professional.</p>
   </div>
   <div>
-    <ul class="fl" style="justify-content:flex-end;"><li><a href="#proto">Protocol</a></li><li><a href="#sci">Science</a></li><li><a href="#faq">FAQ</a></li><li><a href="#">Share</a></li></ul>
+    <ul class="fl" style="justify-content:flex-end;"><li><a href="#proto">Protocol</a></li><li><a href="#sci">Science</a></li><li><a href="#faq">FAQ</a></li><li><a href="https://www.skool.com/devons-group-8553/about" target="_blank">Community</a></li></ul>
     <p class="fc" style="text-align:right;">© 2026 #75HEALED</p>
   </div>
 </footer>
@@ -506,19 +505,7 @@ function tFAQ(btn){
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}});},{threshold:.05,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.prac,.rc,.study,.pil,.stat,.qc').forEach(el=>{io.observe(el);});
 
-function submitEmail() {
-  const inp = document.getElementById('emailInput');
-  const val = inp.value.trim();
-  if (!val || !val.includes('@')) {
-    inp.style.borderColor = 'rgba(255,100,100,0.5)';
-    inp.placeholder = 'Please enter a valid email';
-    setTimeout(() => { inp.style.borderColor = ''; inp.placeholder = 'your@email.com'; }, 2000);
-    return;
-  }
-  document.getElementById('emailRow').style.display = 'none';
-  document.getElementById('emailNote').style.display = 'none';
-  document.getElementById('emailSuccess').style.display = 'block';
-}
+// Email form replaced with community links
 </script>
 </body>
 </html>
