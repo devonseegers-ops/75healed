@@ -46,7 +46,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 @keyframes ringP{0%,100%{opacity:.7;}50%{opacity:.15;}}
 .hero-inner{position:relative;z-index:2;max-width:860px;margin:0 auto;}
 .hero-eye{font-family:'Inter',sans-serif;font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.88);font-weight:300;margin-bottom:36px;display:block;animation:fi 1.2s ease both;}
-.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8.5vw,7.5rem);font-weight:300;line-height:.98;color:var(--white);letter-spacing:-1px;margin-bottom:32px;animation:fi 1.2s .15s ease both;}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,8.5vw,7.5rem);font-weight:300;line-height:.98;color:var(--white);letter-spacing:-1px;margin-bottom:32px;animation:fi 1.2s .15s ease both;}
 .hero-h1 em{font-style:italic;color:var(--silver-hi);}
 .hero-h1 .acc{font-family:'Cinzel',serif;font-size:.5em;font-weight:900;letter-spacing:8px;color:var(--teal);display:block;margin-top:16px;}
 .hero-sub{font-size:1rem;line-height:1.9;color:var(--silver);max-width:520px;margin:0 auto 52px;animation:fi 1.2s .3s ease both;}
@@ -188,6 +188,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
 /* RESPONSIVE */
 @media(max-width:900px){
   nav{padding:22px 24px;}
+  .hero-h1{font-size:clamp(2.4rem,7.5vw,7.5rem);}
+  .hero-h1 em{white-space:nowrap;font-size:0.92em;}
   .nav-links{display:none;}
   .sp{padding:80px 24px;}
   .sp-sm{padding:60px 24px;}
