@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healing Hypnosis Generator — #75HEALED</title>
+<meta name="description" content="Choose what's going on, add a detail if you like, and get two blocks of text to paste straight into Suno. Make one for yourself, or for someone you love.">
+<link rel="canonical" href="https://75healed.com/healing-hypnosis/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Healing Hypnosis Generator — #75HEALED">
+<meta property="og:description" content="A personalized healing hypnosis in about a minute. For you, or for someone you love.">
+<meta property="og:url" content="https://75healed.com/healing-hypnosis/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --black:#050608;
+  --near-black:#0C0D12;
+  --dark:#12141A;
+  --mid:#1A1D26;
+  --card:#1F2230;
+  --silver:#A8B4C8;
+  --silver-hi:#D4DCE8;
+  --white:#F0F2F5;
+  --teal:#8ab89a;
+  --teal-dim:rgba(138,184,154,.55);
+  --gold:#C9A84C;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--silver);font-weight:300;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ── NAV ─────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;background:linear-gradient(180deg,rgba(5,6,8,.96) 0%,rgba(5,6,8,.82) 55%,rgba(5,6,8,0) 100%);}
+.nav-logo{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;letter-spacing:5px;color:var(--white);text-decoration:none;}
+.nav-links{display:flex;gap:40px;list-style:none;}
+.nav-links a{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .3s;}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--black);background:var(--white);padding:11px 28px;text-decoration:none;transition:all .3s;}
+.nav-cta:hover{background:var(--teal);}
+
+/* ── ORB ─────────────────────────────────────────── */
+.orb{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);width:720px;height:720px;border-radius:50%;
+  background:radial-gradient(ellipse at 35% 35%,rgba(200,210,220,.14) 0%,rgba(120,135,165,.055) 32%,rgba(80,95,125,.025) 58%,transparent 72%);
+  box-shadow:inset 0 0 100px rgba(160,175,205,.05),0 0 300px rgba(138,184,154,.03);
+  animation:breathe 11s ease-in-out infinite;pointer-events:none;z-index:0;}
+@keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(.94);opacity:.75;}50%{transform:translate(-50%,-50%) scale(1.04);opacity:1;}}
+
+/* ── LAYOUT ──────────────────────────────────────── */
+.wrap{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:150px 40px 40px;}
+.eye{font-size:.65rem;letter-spacing:6px;text-transform:uppercase;color:var(--teal-dim);margin-bottom:20px;display:block;}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,7vw,4.6rem);font-weight:300;line-height:1.04;color:var(--white);letter-spacing:-1px;margin-bottom:24px;}
+h1 em{font-style:italic;color:var(--silver-hi);}
+.lede{font-size:1rem;line-height:1.95;color:var(--silver);max-width:560px;}
+.rule{width:48px;height:1px;background:linear-gradient(90deg,var(--teal),transparent);margin:44px 0;}
+
+.step{margin-bottom:54px;}
+.step-head{display:flex;align-items:baseline;gap:16px;margin-bottom:14px;}
+.step-n{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:3px;color:var(--teal-dim);flex-shrink:0;}
+.step-t{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--white);line-height:1.3;}
+.step-t .opt{font-family:'Inter',sans-serif;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-left:10px;font-weight:300;}
+.step-sub{font-size:.83rem;color:var(--silver);opacity:.8;margin-bottom:20px;line-height:1.8;}
+
+/* ── SEGMENTED (who for) ─────────────────────────── */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);}
+.seg button{background:var(--dark);border:none;cursor:pointer;padding:22px 26px;text-align:left;font-family:'Inter',sans-serif;transition:background .35s;}
+.seg button:hover{background:var(--mid);}
+.seg button.on{background:var(--mid);box-shadow:inset 2px 0 0 var(--teal);}
+.seg-m{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--white);margin-bottom:5px;transition:color .3s;}
+.seg button.on .seg-m{color:var(--teal);}
+.seg-d{font-size:.77rem;line-height:1.6;color:var(--silver);opacity:.8;}
+
+.namewrap{margin-top:18px;display:none;}
+.namewrap.show{display:block;animation:fi .5s ease both;}
+input[type=text]{width:100%;max-width:340px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);color:var(--white);
+  font-family:'Inter',sans-serif;font-size:.95rem;font-weight:300;padding:15px 18px;outline:none;transition:border-color .3s;}
+input[type=text]:focus{border-color:var(--teal);}
+input[type=text]::placeholder{color:rgba(255,255,255,.22);}
+
+/* ── CHECK CHIPS ─────────────────────────────────── */
+.group{margin-bottom:26px;}
+.group-l{font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal-dim);margin-bottom:14px;display:block;}
+.picks{display:flex;flex-wrap:wrap;gap:9px;}
+.pick{display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(255,255,255,.12);color:var(--silver);cursor:pointer;
+  font-family:'Inter',sans-serif;font-size:.8rem;font-weight:300;padding:11px 17px;transition:all .28s;line-height:1.4;text-align:left;}
+.pick:hover{border-color:rgba(138,184,154,.5);color:var(--white);}
+.pick .tick{width:13px;height:13px;border:1px solid rgba(255,255,255,.25);flex-shrink:0;position:relative;transition:all .28s;}
+.pick.on{border-color:var(--teal);color:var(--white);background:rgba(138,184,154,.07);}
+.pick.on .tick{background:var(--teal);border-color:var(--teal);}
+.pick.on .tick::after{content:'';position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid var(--black);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);}
+
+textarea{width:100%;min-height:118px;resize:vertical;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);
+  color:var(--white);font-family:'Inter',sans-serif;font-size:.95rem;font-weight:300;line-height:1.8;padding:20px 22px;outline:none;transition:border-color .3s,background .3s;}
+textarea:focus{border-color:var(--teal);background:rgba(255,255,255,.05);}
+textarea::placeholder{color:rgba(255,255,255,.22);}
+
+.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);}
+.mode{background:var(--dark);border:none;cursor:pointer;text-align:left;padding:24px 26px;transition:background .35s;font-family:'Inter',sans-serif;}
+.mode:hover{background:var(--mid);}
+.mode.on{background:var(--mid);box-shadow:inset 2px 0 0 var(--teal);}
+.mode-m{font-family:'Cormorant Garamond',serif;font-size:1.28rem;font-weight:400;color:var(--white);margin-bottom:6px;transition:color .3s;}
+.mode.on .mode-m{color:var(--teal);}
+.mode-d{font-size:.78rem;line-height:1.65;color:var(--silver);opacity:.82;font-weight:300;}
+
+/* ── BUTTONS ─────────────────────────────────────── */
+.gen-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+.btn-main{background:var(--white);color:var(--black);border:none;cursor:pointer;padding:19px 52px;font-family:'Inter',sans-serif;
+  font-size:.7rem;letter-spacing:4px;text-transform:uppercase;font-weight:500;transition:all .35s;}
+.btn-main:hover:not(:disabled){background:var(--teal);}
+.btn-main:disabled{opacity:.3;cursor:not-allowed;}
+.btn-ghost{background:none;border:1px solid rgba(255,255,255,.18);color:var(--silver);cursor:pointer;padding:18px 34px;font-family:'Inter',sans-serif;
+  font-size:.7rem;letter-spacing:4px;text-transform:uppercase;font-weight:300;text-decoration:none;display:inline-block;transition:all .35s;}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+.hint{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.22);}
+
+/* ── OUTPUT ──────────────────────────────────────── */
+#out{display:none;}
+#out.show{display:block;animation:fi .8s ease both;}
+@keyframes fi{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+.field{border:1px solid rgba(255,255,255,.08);background:var(--near-black);margin-bottom:24px;}
+.field-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;}
+.field-label{display:flex;align-items:baseline;gap:12px;}
+.field-n{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:3px;color:var(--teal-dim);}
+.field-t{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--white);font-weight:400;}
+.field-t small{font-family:'Inter',sans-serif;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-left:8px;font-weight:300;}
+.field-actions{display:flex;align-items:center;gap:16px;}
+.count{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);white-space:nowrap;}
+.count.over{color:#e08a8a;}
+.copy{background:none;border:1px solid rgba(255,255,255,.16);color:var(--white);cursor:pointer;font-family:'Inter',sans-serif;
+  font-size:.63rem;letter-spacing:3px;text-transform:uppercase;font-weight:400;padding:9px 20px;transition:all .3s;white-space:nowrap;}
+.copy:hover{border-color:var(--teal);color:var(--teal);}
+.copy.done{background:var(--teal);border-color:var(--teal);color:var(--black);}
+.field textarea{border:none;background:transparent;min-height:0;padding:22px 24px;font-size:.86rem;line-height:1.85;color:var(--silver-hi);}
+.field textarea:focus{background:rgba(255,255,255,.02);}
+#styleOut{height:150px;}
+#lyricOut{height:400px;}
+
+.suno{border:1px solid rgba(138,184,154,.22);background:rgba(138,184,154,.035);padding:28px 30px;margin:36px 0 12px;}
+.suno-t{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--white);margin-bottom:16px;font-weight:400;}
+.suno ol{margin:0 0 22px 18px;font-size:.85rem;line-height:2;color:var(--silver);}
+.suno ol strong{color:var(--silver-hi);font-weight:400;}
+
+footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);padding:56px 60px;margin-top:100px;
+  display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;position:relative;z-index:2;}
+.fb2{font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:5px;color:var(--white);margin-bottom:16px;}
+.fl{display:flex;gap:30px;list-style:none;flex-wrap:wrap;}
+.fl a{font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .3s;}
+.fl a:hover{color:var(--teal);}
+.fnote{font-size:.63rem;letter-spacing:2px;color:rgba(255,255,255,.2);line-height:2;max-width:340px;text-transform:uppercase;}
+
+@media(max-width:820px){
+  nav{padding:20px 22px;}
+  .nav-links{display:none;}
+  .wrap{padding:120px 22px 30px;}
+  .modes,.seg{grid-template-columns:1fr;}
+  .orb{width:400px;height:400px;}
+  footer{padding:44px 22px;flex-direction:column;}
+  .field-head{flex-direction:column;align-items:flex-start;gap:12px;}
+  .btn-main,.btn-ghost{width:100%;text-align:center;}
+  .gen-row{gap:14px;}
+  input[type=text]{max-width:100%;}
+}
+@media(prefers-reduced-motion:reduce){
+  .orb{animation:none;}
+  #out.show,.namewrap.show{animation:none;}
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+<div class="orb" aria-hidden="true"></div>
+
+<nav>
+  <a href="https://75healed.com/" class="nav-logo">#75HEALED</a>
+  <ul class="nav-links">
+    <li><a href="https://75healed.com/#proto">Protocol</a></li>
+    <li><a href="https://75healed.com/#sci">Science</a></li>
+    <li><a href="https://75healed.com/#faq">FAQ</a></li>
+  </ul>
+  <a href="https://www.skool.com/devons-group-8553/about" class="nav-cta" target="_blank" rel="noopener">Join</a>
+</nav>
+
+<main class="wrap">
+
+  <span class="eye">Healing Hypnosis Generator</span>
+  <h1>Four questions.<br><em>Then it's yours.</em></h1>
+  <p class="lede">Tick what's going on, add a detail if you want to, and you'll get two blocks of text. Paste them into Suno's two fields and you have your own healing audio in about a minute. Make one for yourself — or for someone you love.</p>
+
+  <div class="rule"></div>
+
+  <!-- 01 — WHO -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">01</span><h2 class="step-t">Who is this for?</h2></div>
+    <div class="seg" id="who"></div>
+    <div class="namewrap" id="namewrap">
+      <input type="text" id="name" maxlength="24" placeholder="Their first name (optional)" aria-label="Their first name, optional" autocomplete="off">
+    </div>
+  </section>
+
+  <!-- 02 — WHAT -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">02</span><h2 class="step-t" id="whatTitle">What's going on?</h2></div>
+    <p class="step-sub" id="whatSub">Tick everything that fits. The more you choose, the more the script is shaped around it.</p>
+    <div class="group">
+      <span class="group-l">In the body</span>
+      <div class="picks" id="picksBody" role="group" aria-label="Physical experiences"></div>
+    </div>
+    <div class="group">
+      <span class="group-l">In the mind and heart</span>
+      <div class="picks" id="picksHeart" role="group" aria-label="Emotional experiences"></div>
+    </div>
+  </section>
+
+  <!-- 03 — DETAIL -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">03</span><h2 class="step-t">Anything to add?<span class="opt">Optional</span></h2></div>
+    <p class="step-sub" id="detailSub">In your own words. One line is plenty.</p>
+    <textarea id="detail" aria-label="Anything to add, optional" spellcheck="true"></textarea>
+  </section>
+
+  <!-- 04 — MODE -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">04</span><h2 class="step-t">Choose the type of track</h2></div>
+    <div class="modes" id="modes"></div>
+  </section>
+
+  <section class="step">
+    <div class="gen-row">
+      <button class="btn-main" id="go" disabled>Generate</button>
+      <span class="hint" id="genHint">Pick at least one thing above</span>
+    </div>
+  </section>
+
+  <!-- OUTPUT -->
+  <section id="out" aria-live="polite">
+    <div class="rule"></div>
+    <div class="step-head"><span class="step-n">05</span><h2 class="step-t">Copy these two into Suno</h2></div>
+    <p class="step-sub">Two fields. Nothing else to configure.</p>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-label"><span class="field-n">I</span><span class="field-t">Styles<small>Suno field 1</small></span></div>
+        <div class="field-actions">
+          <span class="count" id="styleCount"></span>
+          <button class="copy" data-target="styleOut" aria-label="Copy the Styles text">Copy</button>
+        </div>
+      </div>
+      <textarea id="styleOut" aria-label="Styles — paste into Suno's first field" spellcheck="false"></textarea>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-label"><span class="field-n">II</span><span class="field-t">Lyrics<small>Suno field 2</small></span></div>
+        <div class="field-actions">
+          <span class="count" id="lyricCount"></span>
+          <button class="copy" data-target="lyricOut" aria-label="Copy the Lyrics text">Copy</button>
+        </div>
+      </div>
+      <textarea id="lyricOut" aria-label="Lyrics — paste into Suno's second field" spellcheck="false"></textarea>
+    </div>
+
+    <div class="suno">
+      <p class="suno-t">Where these go</p>
+      <ol>
+        <li>Open Suno and switch to <strong>Custom</strong> mode.</li>
+        <li>Paste <strong>I — Styles</strong> into the Styles field.</li>
+        <li>Paste <strong>II — Lyrics</strong> into the Lyrics field.</li>
+        <li>Press Create.</li>
+      </ol>
+      <div class="gen-row">
+        <a class="btn-ghost" href="https://suno.com/create" target="_blank" rel="noopener">Open Suno</a>
+        <button class="btn-ghost" id="again">New version</button>
+        <button class="btn-ghost" id="reset">Start over</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>
+    <div class="fb2">#75HEALED</div>
+    <ul class="fl">
+      <li><a href="https://75healed.com/">Home</a></li>
+      <li><a href="https://75healed.com/#proto">Protocol</a></li>
+      <li><a href="https://75healed.com/#sci">Science</a></li>
+      <li><a href="https://75healed.com/#faq">FAQ</a></li>
+    </ul>
+  </div>
+  <p class="fnote">
+    Everything you write stays in this browser. Nothing is uploaded.<br>
+    Not medical advice. Don't listen while driving.<br>
+    © 2026 #75HEALED
+  </p>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+var LIMIT_STYLE = 1000;
+var LIMIT_LYRIC = 5000;
+
+/* ── Modes ──────────────────────────────────────── */
+var MODES = [
+  { id:'general', label:'General Healing', desc:'Balanced restoration — any time, any need.',
+    atmosphere:'balanced and restorative, gently spacious',
+    ambience:'soft dawn air, a distant stillness, the faint hush of wind through leaves', close:'general' },
+  { id:'sleep', label:'Sleep', desc:'Sedating, slow, sleep-friendly — for nights when rest is hard.',
+    atmosphere:'sedating and sleep-friendly, unhurried, fading toward silence',
+    ambience:'soft night ambience, distant water, low warm air', close:'sleep' },
+  { id:'sunrise', label:'Sunrise / Morning Coherence', desc:'Orienting, gentle brightness — readiness for the day ahead.',
+    atmosphere:'slightly brighter and orienting, quietly awake',
+    ambience:'dawn air, faint birdsong far away, cool early wind', close:'sunrise' },
+  { id:'reset', label:'Nervous System Reset', desc:'Short, grounding, immediate regulation — for overwhelm or anxiety.',
+    atmosphere:'short, grounding, immediately regulating',
+    ambience:'low steady wind, distant water, very little else', close:'reset' }
+];
+
+/* ── What's going on — the multiple choice ──────── */
+/* carry = noun phrase for "You have been carrying ___"
+   soma  = somatic address   aff = affirmation   wish = healed-state image
+   k     = regex, so free-text detail can add themes too */
+var PICKS = [
+  /* ---- BODY ---- */
+  { id:'congestion', g:'body', label:'Congestion or a cold',
+    k:/sinus|congest|stuff|cold|flu|snot|nose|phlegm|cough|chest infection|sick|virus/i,
+    carry:'a head and a chest that feel full and heavy',
+    soma:'Let your attention rest in your face. Around the eyes. The bridge of the nose. The hollow places behind the cheeks. You do not have to clear anything. Just let the warmth of your own attention arrive there. Heat is circulation. Circulation is healing already happening.',
+    aff:'This body knows how to clear what it no longer needs. Every breath is doing quiet work that does not need managing.',
+    wish:'Imagine breathing through a clear, open channel. Cool air moving freely. The head light. The chest easy. Not later. Now.' },
+
+  { id:'pain', g:'body', label:'Pain or aching',
+    k:/pain|ache|aching|hurt|sore|inflam|injur|throb|back|knee|shoulder pain/i,
+    carry:'pain that has been asking for your attention',
+    soma:'Find the place that hurts. Do not push it away. Let the breath move toward it instead, the way you would move toward someone you love who is frightened. Pain that is met begins to loosen. Pain that is fought holds on.',
+    aff:'I do not have to fight my body to heal it. Softening is safe. These tissues can let go.',
+    wish:'Imagine that place easy again. Loose. Warm. Forgotten, in the good way — the way a body feels when nothing is asking for attention.' },
+
+  { id:'headache', g:'body', label:'Headache or pressure',
+    k:/head ?ache|migraine|head hurt|pressure in my head|tension head/i,
+    carry:'pressure that has settled behind the eyes',
+    soma:'Soften the small muscles around the eyes. The scalp. The hinge of the jaw. Let the tongue come away from the roof of the mouth. So much of a head holds on down here, where we never look.',
+    aff:'I can let go of holding I did not know I was doing. My head can be light.',
+    wish:'Imagine the pressure draining downward and out — through the neck, the shoulders, the arms, away.' },
+
+  { id:'gut', g:'body', label:'Stomach or gut',
+    k:/stomach|gut|nausea|nauseous|digest|bloat|ibs|bowel|appetite|belly/i,
+    carry:'a stomach that has not felt settled',
+    soma:'Let the belly go soft. Most of us hold it in without knowing. Let it round out with the breath. The gut relaxes when it feels safe, and it is listening to your breathing to decide.',
+    aff:'This body can digest, settle, and calm. It knows this rhythm without instruction.',
+    wish:'Imagine the middle of you quiet and warm and unremarkable — nothing to notice, nothing to manage.' },
+
+  { id:'skin', g:'body', label:'Skin',
+    k:/skin|rash|eczema|acne|psorias|itch|hive|breakout/i,
+    carry:'skin that has been asking to be left alone',
+    soma:'Let your attention rest just on the surface of you — the whole outer edge of the body at once. Not fixing. Just present. Skin calms when the nervous system underneath it calms.',
+    aff:'My skin is part of me and it is doing its best to protect me. I can meet it with patience instead of war.',
+    wish:'Imagine the surface of you cool, quiet, unbothered. Nothing calling for attention.' },
+
+  { id:'moon', g:'body', label:'On my moon',
+    k:/moon|period|menstru|pms|cycle|womb|uterus|bleeding|cramp/i,
+    carry:'a body in the part of its cycle that asks for rest',
+    soma:'Let your attention settle low, into the bowl of the hips. Warmth there. Weight there. This is a body doing exactly what it was designed to do. Nothing is going wrong.',
+    aff:'This body is not broken when it asks for rest. I am allowed to slow to the speed of what is happening inside me.',
+    wish:'Imagine warmth spreading low and wide, the muscles unclenching, the whole basin of you soft and held.' },
+
+  { id:'tension', g:'body', label:'Tension or tightness',
+    k:/tight|tension|shoulder|neck|jaw|clench|knot|brac|stiff/i,
+    carry:'tension you have been holding without meaning to',
+    soma:'Follow the tension. The shoulders lifting toward the ears. The jaw set. The hands. Let each one drop a little further than feels natural, and then a little further again.',
+    aff:'I can release what I have been holding. This body does not need to guard me right now.',
+    wish:'Imagine the shoulders low and wide, the jaw loose, the hands open and still.' },
+
+  { id:'breath', g:'body', label:'Hard to breathe',
+    k:/breath|breathe|asthma|chest tight|hyperventil|short of breath|winded/i,
+    carry:'a chest that has not felt open',
+    soma:'Let the breath be smaller than you think it should be. You do not need a big breath. You need an unhurried one. Let the exhale be the part that takes the time.',
+    aff:'My breath does not have to be perfect to be enough. Air is here, and it will keep being here.',
+    wish:'Imagine breathing without noticing you are breathing — easy, automatic, quiet.' },
+
+  /* ---- HEART ---- */
+  { id:'anxiety', g:'heart', label:'Anxiety',
+    k:/anx|panic|worry|worri|racing|spiral|nervous|on edge|restless|overthink|dread|fear/i,
+    carry:'a nervous system that has been bracing for something',
+    soma:'Feel where you are holding. The jaw. The throat. The band across the chest. This body has been bracing for something. Let it know it can stand down now. There is nothing in this room that requires your defense.',
+    aff:'I am safe in this moment. This body is allowed to stop preparing. This breath is enough.',
+    wish:'Imagine the chest wide and unhurried. Thoughts arriving slowly, one at a time, with space around each one.' },
+
+  { id:'sleepless', g:'heart', label:"Can't sleep",
+    k:/sleep|insomni|awake|cannot rest|can\u2019t rest|can't rest|tired but wired|wired|3 ?am/i,
+    carry:'nights that have not been giving you rest',
+    soma:'Let this body get heavier than you expected. The back of the head into the pillow. The shoulders giving up their weight. You do not have to try to sleep. Trying is the only thing keeping you awake.',
+    aff:'Rest is already happening. Even lying here quietly, this body is restoring itself.',
+    wish:'Imagine the moment just before sleep — the moment you never remember, when everything simply lets go. You are close to it now.' },
+
+  { id:'grief', g:'heart', label:'Grief or loss',
+    k:/grie|grief|loss|lost|died|death|mourn|funeral|heartbroke|heartbreak|breakup|broke up|divorce|miss(ing)?\s+(him|her|them)/i,
+    carry:'grief that does not fit anywhere convenient',
+    soma:'Let the grief be here. It does not need to be smaller than it is. Feel where it lives — the throat, the sternum, the low belly. Breathe underneath it. Not to move it. Just so it is not carrying itself alone.',
+    aff:'I can hold this and still be held. Love does not become smaller because it hurts.',
+    wish:'Imagine the ache softening at the edges. Still there. Less sharp. A weight that can be carried with both arms instead of one.' },
+
+  { id:'burnout', g:'heart', label:'Burned out',
+    k:/burn(ed|t)? ?out|exhaust|deplet|drained|overwhelm|too much|no capacity|running on empty|fried|spent|tired/i,
+    carry:'a tiredness that sleep has not been touching',
+    soma:'Notice how long you have been holding yourself up. Let the spine hand its weight to whatever is beneath it. Nothing is being asked of you in this moment. Nothing at all.',
+    aff:'I am allowed to stop. My worth is not produced. Rest is not something I have to earn back.',
+    wish:'Imagine waking with something in the tank. Not urgency — just quiet, ordinary energy, available and unforced.' },
+
+  { id:'low', g:'heart', label:'Low or numb',
+    k:/sad|depress|low|numb|empty|hopeless|heavy|flat|dark place|disconnect/i,
+    carry:'a heaviness that has been hard to name',
+    soma:'Let the heaviness be heavy. It does not have to be lifted in the next few minutes. Feel this body making contact with what supports it. Something is holding you already, and it has been the whole time.',
+    aff:'I do not have to feel better to be worthy of care. This will move, and it does not have to be forced.',
+    wish:'Imagine a small return of colour at the edges. Not a rescue. Just a little more light than there was.' },
+
+  { id:'anger', g:'heart', label:'Anger',
+    k:/ang|rage|frustrat|resent|furious|irritat|bitter/i,
+    carry:'anger that has had nowhere useful to go',
+    soma:'The anger is allowed. It is energy, and it is trying to protect something. Feel it in the arms, the jaw, the heat in the chest. Breathe with it rather than at it. It will move when it is not being argued with.',
+    aff:'My anger has information in it and it does not have to run me. I can feel it fully and still be calm.',
+    wish:'Imagine the heat spending itself and leaving behind clarity — steady, cool, unclouded.' },
+
+  { id:'shame', g:'heart', label:'Shame or self-criticism',
+    k:/shame|guilt|hate myself|not good enough|failure|worthless|embarrass|regret|stupid/i,
+    carry:'a voice that has not been kind to you',
+    soma:'Notice the impulse to curl inward, to become smaller. Let the chest open half an inch instead. Just half. This body does not have to apologize for taking up space.',
+    aff:'I can be honest about what happened and still be kind to myself. Both are allowed at once.',
+    wish:'Imagine being met the way you would meet a friend who did their best with what they had.' },
+
+  { id:'lonely', g:'heart', label:'Lonely',
+    k:/lonel|alone|isolat|nobody|no one|unseen|unloved|left out/i,
+    carry:'a loneliness that has not been said out loud',
+    soma:'Place a hand somewhere on the body — the chest, the belly, wherever feels right. Feel the warmth pass from one part of you to another. You are not being touched by no one. You are here, and you are touching yourself with care.',
+    aff:'I can be my own good company. Connection begins with the way I meet myself.',
+    wish:'Imagine feeling easy in your own presence. Not waiting. Not reaching. Simply here, and content to be.' }
+];
+
+/* ── Script pools ───────────────────────────────── */
+var OPEN = [
+  'You can let your eyes close whenever you are ready. Or you can leave them open and soft. There is no wrong way to begin this.',
+  'Wherever you are right now is fine. You do not need a special place or a special posture. You only need a few minutes and a willingness to be here for them.',
+  'Let this be easy. There is nothing to get right in the next few minutes. You can simply listen, and let whatever happens, happen.',
+  'You have arrived. That is the whole of what was required. Everything after this can be slow.'
+];
+var SETTLE = [
+  'Let your body settle into whatever is holding it. Notice the places where you make contact — the backs of the legs, the shoulders, the palms. Let a little more of your weight go into those places. And a little more.',
+  'Feel the surface underneath you taking your weight. It has been doing that this whole time. You can stop helping it now.',
+  'Let your body get heavy in the way a body gets heavy when it finally believes it is allowed to.'
+];
+var BREATH = [
+  'Now let the breath come in slowly, a long, quiet inhale. And out again, just as slow, just as long. The chime will keep the rhythm. One chime in. One chime out. You do not have to count. You can just follow the sound.',
+  'Let the breathing slow down to meet the chime. In as it rings. Out as it rings again. If you lose the rhythm, it will still be there when you come back.',
+  'Breathe in with the chime, all the way through it. And out with the next one, all the way through. Slow enough that the breath feels almost lazy.'
+];
+var COHERENCE = [
+  'This pace is not arbitrary. At around this speed, the heart and the breath fall into step with each other, and the nervous system reads that as safety. You are not imagining the calm. You are producing it.',
+  'When the breath is this slow, the body stops preparing for something. The heart steadies. The chemistry changes. This is the oldest lever we have, and it is in your hands.',
+  'Something happens at this speed. The signal from the body to the brain shifts from alarm to safety, and everything downstream begins to follow.'
+];
+var ACCEPT = [
+  'And now something that might feel strange. Nothing in this moment needs to change. Not the discomfort. Not the tiredness. Not the thoughts. This moment is allowed to be exactly as it is, and you are allowed to stop fighting it. That is not giving up. That is where the healing gets its energy back.',
+  'Let this be the moment you stop pushing against what is happening. Nothing in this moment needs to change. The energy it took to resist can go somewhere more useful now.',
+  'Here is the release: nothing in this moment needs to change. You can stop bracing against your own experience. It is safe to let it be what it is.'
+];
+var INQUIRY = [
+  'If there is a thought that keeps returning, one of the tight ones, let it come forward. And ask it gently: is that absolutely true. Not to argue with it. Just to loosen its grip a little. Notice how the body feels while believing it. And notice how the body would feel without it. That space is already there.',
+  'Whatever the loudest thought is, hold it lightly for a moment and ask: can I be certain that this is true. Feel what happens in the chest when you ask. That small loosening is the answer.',
+  'There may be a story running underneath all this. Let it be here, and ask it once, kindly: is that true. Then notice who you are in the half second before the answer arrives.'
+];
+var KINDNESS = [
+  'Now send something warm toward this body. Not because it has earned it. Because it has been working the entire time, without being asked, without being thanked. Let a phrase come with the breath. May this body be at ease. May this body be well. May this body be met with kindness.',
+  'Turn toward yourself the way you would turn toward someone you love. May you be at ease. May you be safe. May you be well. Let the words land somewhere real, not just in your head.',
+  'Offer this body something it rarely receives. Gratitude, maybe. Or just patience. May this body be at ease. May this body be well. Say it slowly enough to mean it.'
+];
+var NEVILLE = [
+  'And now let yourself feel it as already done. Not hoped for. Not coming. Here. Feel the relief in the chest that comes with it. Feel what the shoulders do when it is true. The body does not distinguish between vividly imagined and remembered, so give it something good to work with.',
+  'Let yourself feel the wish fulfilled. Not the wanting of it. The having of it. The quiet, unremarkable feeling of it simply being the case.',
+  'Move into the feeling of it already being true. Notice the ordinariness of it. That ordinariness is the thing. That is what the body responds to.'
+];
+var TRANSURF = [
+  'And when the attention drifts back toward the problem, and it will, you do not have to fight it. Just move it. Place it back on the version of this that you would like. Attention is not passive. Where it rests is where the pattern strengthens.',
+  'You are not denying anything. You are simply choosing where to put your attention, over and over, gently, toward the outcome rather than the obstacle.',
+  'Keep bringing the attention back to the reality you would prefer. Not with effort. With the same softness you would use to turn a page.'
+];
+var TRUST = [
+  'This body has been repairing itself every day of your life without ever asking permission. It is doing it now. Cells replacing themselves. Inflammation quieting. The work continuing whether it is watched or not.',
+  'There is an intelligence in you older than your thinking. It has healed every wound you have ever had. It has not stopped.',
+  'The healing does not require your belief. It only requires that you stop getting in its way. And for these few minutes, you have.'
+];
+var IDENTITY = [
+  'And underneath all of this, something quieter. You are not someone who is broken and hoping to be fixed. You are someone whose body knows how to heal, and is doing it right now, in this moment, without needing supervision.',
+  'Let this settle into who you are, not just what you are doing. A person who is healing. A person whose nervous system knows how to come home. That is not aspiration. That is a description.',
+  'This is not a technique you are performing. This is what you are like. Steady. Coherent. Healing. Let the identity be the thing that stays after the sound stops.'
+];
+var CLOSE = {
+  general:[
+    'Stay here as long as you like. When you are ready to come back, let it be slow. Nothing needs to happen quickly. Whatever you have found here, you can carry a little of it with you. It was never separate from you to begin with.',
+    'When the sound ends, do not rush anywhere. Let the quiet last a little longer than the audio does. This state is yours. You can return to it whenever you want, with nothing but the breath.'
+  ],
+  sleep:[
+    'You can stop listening now. Let the words become distant. Let them blur. There is nothing left to follow. Your body knows what to do from here. Heavier. Slower. Further down. And down. And gone.',
+    'Let it all get further away now. The words. The room. The day. You do not need to stay with me. Just sink. Sink. Let go completely. Sleep is already here.'
+  ],
+  sunrise:[
+    'Let a little more light in now. Let the breath deepen slightly. Nothing urgent. Just the beginning of readiness. When you open your eyes, bring this steadiness with you into the day. It will hold for longer than you expect.',
+    'Slowly let yourself come toward the day. Not braced for it. Ready for it. Carry this quality with you — the slow breath, the open chest, the sense that there is time.'
+  ],
+  reset:[
+    'You can come back now. The breath stays slow. The shoulders stay low. Nothing has changed in the room, but something has changed in you. Take one more long exhale, and let that be the line between before and after.',
+    'Come back gently. Keep the breath. Keep the softness in the jaw. You are regulated now, and you can do this again in three minutes any time you need it.'
+  ]
+};
+
+/* ── Helpers ────────────────────────────────────── */
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+function cleanName(raw){
+  var n = String(raw||'').replace(/[^\p{L}\p{M}'’\- ]/gu,'').replace(/\s+/g,' ').trim().slice(0,24);
+  if (!n) return '';
+  return n.charAt(0).toUpperCase() + n.slice(1);
+}
+
+/* Anything Suno would read aloud as a symbol is stripped here:
+   markup, brackets, markdown, pipes, backticks, emoji. */
+function asSpoken(text){
+  var s = String(text||'');
+  s = s.replace(/<[^>]*>/g, ' ');                       // strip any tags outright
+  s = s.replace(/[^\p{L}\p{M}\p{N}\s.,;:'\u2019!?\-\u2014]/gu, ' ');
+  s = s.replace(/\s+/g,' ').trim();
+  if (!s) return '';
+  if (s.length > 380) s = s.slice(0,380).replace(/\s+\S*$/,'');
+  s = s.replace(/[\u2026,;:\-\u2014\s]+$/,'');
+  s = s.charAt(0).toUpperCase() + s.slice(1);
+  if (!/[.!?]$/.test(s)) s += '.';
+  return s;
+}
+
+function joinList(items){
+  if (items.length === 1) return items[0];
+  if (items.length === 2) return items[0] + ' and ' + items[1];
+  return items.slice(0,-1).join(', ') + ', and ' + items[items.length-1];
+}
+
+/* Selected picks + any extra themes found in the free-text detail */
+function resolveThemes(selectedIds, detail){
+  var out = [], seen = {};
+  PICKS.forEach(function(p){
+    if (selectedIds.indexOf(p.id) > -1){ out.push(p); seen[p.id] = 1; }
+  });
+  if (detail && detail.trim()){
+    PICKS.forEach(function(p){
+      if (!seen[p.id] && p.k.test(detail)){ out.push(p); seen[p.id] = 1; }
+    });
+  }
+  return out;
+}
+
+/* ── Styles field ───────────────────────────────── */
+function buildStyle(mode){
+  var s =
+'Spoken word hypnosis, guided meditation, no singing. ' +
+'Natural human voice: calm, grounded, quiet volume, slow pacing, intimate and reassuring. ' +
+'Not theatrical, not robotic, no announcer tone. ' +
+'Minimal ambient soundscape only \u2014 no piano, no melody, no chords, no drums. ' +
+'Subtle natural ambience: ' + mode.ambience + '. ' +
+'A soft low chime every 5.5 seconds to pace the breathing \u2014 inhale for one chime, exhale for the next. ' +
+'Atmosphere: ' + mode.atmosphere + '. ' +
+'Long pauses between phrases. Plenty of silence. ' +
+'Purpose: relaxation, radical acceptance, nervous system regulation, healing.';
+  if (s.length > LIMIT_STYLE) s = s.slice(0, LIMIT_STYLE - 1).replace(/\s+\S*$/,'') + '.';
+  return s;
+}
+
+/* ── Lyrics field ───────────────────────────────── */
+function buildLyrics(opts){
+  var themes = resolveThemes(opts.picks, opts.detail);
+  var name   = opts.name;
+  var forOther = opts.forOther;
+  var nm = name ? (', ' + name) : '';
+
+  /* Opening — always grammatical, built from the choices */
+  var head;
+  if (themes.length){
+    head = 'You have been carrying ' + joinList(themes.slice(0,4).map(function(t){ return t.carry; })) + '.';
+  } else {
+    head = 'You have been carrying something that has been hard to put down.';
+  }
+  head += ' Let that be said out loud, and then let it be set down for a moment. It does not have to be solved in the next few minutes. It only has to be allowed.';
+
+  /* The giver's own words are only spoken back when the listener wrote them */
+  if (!forOther && opts.detail && opts.detail.trim()){
+    head += ' In your own words: ' + asSpoken(opts.detail);
+  }
+
+  /* A gift framing when someone made this for someone else */
+  if (forOther){
+    head += name
+      ? ' This was made for you' + nm + ', by someone who noticed.'
+      : ' This was made for you by someone who noticed.';
+  }
+
+  var core = [ pick(OPEN), pick(SETTLE), head, pick(BREATH), pick(COHERENCE), pick(ACCEPT) ];
+
+  /* Personalized middle — up to three somatic addresses */
+  var mid = [];
+  if (themes.length){
+    themes.slice(0,3).forEach(function(t){ mid.push(t.soma); });
+  } else {
+    mid.push('Let your attention move slowly through the body. The face. The throat. The chest. The belly. The hands. Wherever it lands, let that place soften by a fraction. You are not looking for anything. You are just letting yourself be visited.');
+  }
+  mid.push(pick(INQUIRY));
+
+  var kind = pick(KINDNESS);
+  if (name) kind = kind.replace('May you be at ease.', 'May you be at ease' + nm + '.');
+  mid.push(kind);
+
+  var affs = themes.length ? themes.slice(0,3).map(function(t){ return t.aff; })
+                           : ['This body knows how to heal. It is doing it now, without supervision.'];
+  mid.push('Let these be said quietly, as though they were simply facts. ' + affs.join(' ') + ' I am safe. I am held. I am healing.');
+
+  var wishes = themes.length ? themes.slice(0,3).map(function(t){ return t.wish; })
+                             : ['Imagine yourself easy. Rested. At home in your own body. Not in the future. In this version of the moment.'];
+  mid.push(pick(NEVILLE) + ' ' + wishes.join(' '));
+
+  var SIGNOFF = { general:'Be well', sleep:'Sleep well', sunrise:'Go gently', reset:'Go gently' };
+  var closing = pick(CLOSE[opts.mode.close]);
+  if (name) closing += ' ' + SIGNOFF[opts.mode.close] + nm + '.';
+  var tail = [ pick(TRANSURF), pick(TRUST), pick(IDENTITY), closing ];
+
+  var text = core.concat(mid, tail).join('\n\n');
+  while (text.length > LIMIT_LYRIC && mid.length > 3){
+    mid.splice(1,1);
+    text = core.concat(mid, tail).join('\n\n');
+  }
+  if (text.length > LIMIT_LYRIC) text = text.slice(0, LIMIT_LYRIC).replace(/\s+\S*$/,'');
+  return text;
+}
+
+/* ── DOM ────────────────────────────────────────── */
+var $ = function(id){ return document.getElementById(id); };
+var detailEl=$('detail'), nameEl=$('name'), outEl=$('out'),
+    styleEl=$('styleOut'), lyricEl=$('lyricOut'),
+    styleCount=$('styleCount'), lyricCount=$('lyricCount'), goBtn=$('go');
+
+var state = { forOther:false, picks:[], mode:MODES[0] };
+
+/* 01 — who */
+var WHO = [
+  { other:false, m:'Myself', d:'The script speaks directly to you.' },
+  { other:true,  m:'Someone else', d:'A gift. Add their name and it will be woven in.' }
+];
+WHO.forEach(function(w, i){
+  var b = document.createElement('button');
+  b.type='button'; b.className = i===0 ? 'on' : '';
+  b.setAttribute('aria-pressed', i===0 ? 'true':'false');
+  b.setAttribute('aria-label', w.m + ' — ' + w.d);
+  b.innerHTML = '<div class="seg-m"></div><div class="seg-d"></div>';
+  b.querySelector('.seg-m').textContent = w.m;
+  b.querySelector('.seg-d').textContent = w.d;
+  b.addEventListener('click', function(){
+    state.forOther = w.other;
+    Array.prototype.forEach.call($('who').children, function(el){
+      el.classList.remove('on'); el.setAttribute('aria-pressed','false');
+    });
+    b.classList.add('on'); b.setAttribute('aria-pressed','true');
+    $('namewrap').classList.toggle('show', w.other);
+    if (!w.other) nameEl.value = '';
+    $('whatTitle').textContent = w.other ? "What's going on for them?" : "What's going on?";
+    $('whatSub').textContent = w.other
+      ? 'Tick everything that fits. The more you choose, the more the script is shaped around them.'
+      : 'Tick everything that fits. The more you choose, the more the script is shaped around it.';
+    $('detailSub').textContent = w.other
+      ? 'Anything else about what they are going through. This is used to tailor the script — it is never read aloud.'
+      : 'In your own words. One line is plenty.';
+    detailEl.placeholder = w.other ? 'She lost her mother in the spring…' : 'I have stuffed sinuses and feel exhausted…';
+    save();
+  });
+  $('who').appendChild(b);
+});
+
+/* 02 — picks */
+PICKS.forEach(function(p){
+  var b = document.createElement('button');
+  b.type='button'; b.className='pick'; b.setAttribute('aria-pressed','false');
+  b.innerHTML = '<span class="tick" aria-hidden="true"></span><span></span>';
+  b.querySelector('span:last-child').textContent = p.label;
+  b.addEventListener('click', function(){
+    var i = state.picks.indexOf(p.id);
+    if (i > -1) state.picks.splice(i,1); else state.picks.push(p.id);
+    b.classList.toggle('on', i === -1);
+    b.setAttribute('aria-pressed', i === -1 ? 'true' : 'false');
+    validate(); save();
+  });
+  $(p.g === 'body' ? 'picksBody' : 'picksHeart').appendChild(b);
+});
+
+/* 04 — modes */
+MODES.forEach(function(m, i){
+  var b = document.createElement('button');
+  b.type='button'; b.className='mode' + (i===0 ? ' on' : '');
+  b.setAttribute('aria-pressed', i===0 ? 'true':'false');
+  b.setAttribute('aria-label', m.label + ' — ' + m.desc);
+  b.innerHTML = '<div class="mode-m"></div><div class="mode-d"></div>';
+  b.querySelector('.mode-m').textContent = m.label;
+  b.querySelector('.mode-d').textContent = m.desc;
+  b.addEventListener('click', function(){
+    state.mode = m;
+    Array.prototype.forEach.call(document.querySelectorAll('.mode'), function(el){
+      el.classList.remove('on'); el.setAttribute('aria-pressed','false');
+    });
+    b.classList.add('on'); b.setAttribute('aria-pressed','true');
+    save();
+  });
+  $('modes').appendChild(b);
+});
+
+function ready(){ return state.picks.length > 0 || detailEl.value.trim().length > 2; }
+
+function validate(){
+  var ok = ready();
+  goBtn.disabled = !ok;
+  if (!outEl.classList.contains('show')){
+    $('genHint').textContent = ok ? 'Nothing leaves this device' : 'Pick at least one thing above';
+  }
+}
+
+function fmt(n){ return n.toLocaleString('en-US'); }
+function setCount(el, span, limit){
+  var n = el.value.length;
+  span.textContent = fmt(n) + ' / ' + fmt(limit);
+  span.classList.toggle('over', n > limit);
+}
+function refreshCounts(){
+  setCount(styleEl, styleCount, LIMIT_STYLE);
+  setCount(lyricEl, lyricCount, LIMIT_LYRIC);
+}
+styleEl.addEventListener('input', refreshCounts);
+lyricEl.addEventListener('input', refreshCounts);
+
+function generate(){
+  if (!ready()) return;
+  styleEl.value = buildStyle(state.mode);
+  lyricEl.value = buildLyrics({
+    picks: state.picks,
+    detail: detailEl.value,
+    name: cleanName(nameEl.value),
+    forOther: state.forOther,
+    mode: state.mode
+  });
+  refreshCounts();
+  outEl.classList.add('show');
+  $('genHint').textContent = 'Generated \u2014 nothing left this device';
+  outEl.scrollIntoView({ behavior:'smooth', block:'start' });
+  save();
+}
+
+goBtn.addEventListener('click', generate);
+$('again').addEventListener('click', generate);
+$('reset').addEventListener('click', function(){
+  state = { forOther:false, picks:[], mode:MODES[0] };
+  detailEl.value=''; nameEl.value='';
+  Array.prototype.forEach.call(document.querySelectorAll('.pick'), function(el){
+    el.classList.remove('on'); el.setAttribute('aria-pressed','false');
+  });
+  Array.prototype.forEach.call($('who').children, function(el, i){
+    el.classList.toggle('on', i===0); el.setAttribute('aria-pressed', i===0?'true':'false');
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.mode'), function(el, i){
+    el.classList.toggle('on', i===0); el.setAttribute('aria-pressed', i===0?'true':'false');
+  });
+  $('namewrap').classList.remove('show');
+  $('whatTitle').textContent = "What's going on?";
+  detailEl.placeholder = 'I have stuffed sinuses and feel exhausted…';
+  outEl.classList.remove('show');
+  try { localStorage.removeItem('75healed-hh'); } catch(e){}
+  validate();
+  window.scrollTo({ top:0, behavior:'smooth' });
+});
+
+detailEl.addEventListener('input', function(){ validate(); save(); });
+nameEl.addEventListener('input', save);
+detailEl.addEventListener('keydown', function(e){
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') generate();
+});
+
+/* Copy */
+Array.prototype.forEach.call(document.querySelectorAll('.copy'), function(btn){
+  btn.addEventListener('click', function(){
+    var ta = $(btn.getAttribute('data-target'));
+    var done = function(){
+      var was = btn.textContent;
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function(){ btn.textContent = was; btn.classList.remove('done'); }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value).then(done, function(){ fallback(ta, done); });
+    } else fallback(ta, done);
+  });
+});
+function fallback(ta, done){
+  ta.select(); ta.setSelectionRange(0, ta.value.length);
+  try { document.execCommand('copy'); done(); } catch(e){}
+}
+
+/* Remember the last setup */
+function save(){
+  try {
+    localStorage.setItem('75healed-hh', JSON.stringify({
+      o: state.forOther, p: state.picks, m: state.mode.id, d: detailEl.value, n: nameEl.value
+    }));
+  } catch(e){}
+}
+function load(){
+  try {
+    var raw = localStorage.getItem('75healed-hh');
+    if (!raw) { validate(); return; }
+    var d = JSON.parse(raw);
+
+    if (d.o){ $('who').children[1].click(); }
+    if (d.n){ nameEl.value = d.n; }
+    if (d.d){ detailEl.value = d.d; }
+
+    if (Array.isArray(d.p) && d.p.length){
+      var btns = document.querySelectorAll('.pick');
+      PICKS.forEach(function(p, i){
+        if (d.p.indexOf(p.id) > -1 && btns[i]) btns[i].click();
+      });
+    }
+    if (d.m){
+      var idx = -1;
+      MODES.forEach(function(m,i){ if (m.id === d.m) idx = i; });
+      if (idx > -1) document.querySelectorAll('.mode')[idx].click();
+    }
+  } catch(e){}
+  validate();
+}
+load();
+
+})();
+</script>
+</body>
+</html>
