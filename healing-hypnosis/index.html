@@ -107,6 +107,16 @@ textarea::placeholder{color:rgba(255,255,255,.22);}
 .mode.on .mode-m{color:var(--teal);}
 .mode-d{font-size:.78rem;line-height:1.65;color:var(--silver);opacity:.82;font-weight:300;}
 
+/* ── CURATE ROWS ─────────────────────────────────── */
+.tune{border-top:1px solid rgba(255,255,255,.06);}
+.tune-row{display:flex;align-items:center;gap:20px;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;}
+.tune-l{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);opacity:.75;min-width:132px;flex-shrink:0;}
+.pills{display:flex;gap:1px;background:rgba(255,255,255,.07);flex-wrap:wrap;}
+.pill{background:var(--dark);border:none;color:var(--silver);cursor:pointer;font-family:'Inter',sans-serif;
+  font-size:.76rem;font-weight:300;padding:11px 17px;transition:all .28s;line-height:1.4;}
+.pill:hover{background:var(--mid);color:var(--white);}
+.pill.on{background:var(--mid);color:var(--teal);box-shadow:inset 0 -2px 0 var(--teal);}
+
 /* ── BUTTONS ─────────────────────────────────────── */
 .gen-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
 .btn-main{background:var(--white);color:var(--black);border:none;cursor:pointer;padding:19px 52px;font-family:'Inter',sans-serif;
@@ -231,6 +241,13 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
     <div class="modes" id="modes"></div>
   </section>
 
+  <!-- 05 — CURATE -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">05</span><h2 class="step-t">Curate the sound<span class="opt">Already set</span></h2></div>
+    <p class="step-sub">Every one of these has a good default. Change any of them if you want to.</p>
+    <div class="tune" id="tune"></div>
+  </section>
+
   <section class="step">
     <div class="gen-row">
       <button class="btn-main" id="go" disabled>Generate</button>
@@ -322,6 +339,31 @@ var MODES = [
   { id:'reset', label:'Nervous System Reset', desc:'Short, grounding, immediate regulation — for overwhelm or anxiety.',
     atmosphere:'short, grounding, immediately regulating',
     ambience:'low steady wind, distant water, very little else', close:'reset' }
+];
+
+/* ── Curate the sound — every row has a default ─── */
+var TUNE = [
+  { key:'voice', label:'Voice', def:'natural',
+    opts:[ {id:'natural', label:'No preference', style:'Natural human voice'},
+           {id:'female',  label:"Woman's voice", style:'Natural female human voice'},
+           {id:'male',    label:"Man's voice",   style:'Natural male human voice'} ] },
+
+  { key:'scape', label:'Soundscape', def:'match',
+    opts:[ {id:'match',  label:'Match the track', amb:null},
+           {id:'ocean',  label:'Ocean',  amb:'distant ocean waves, slow and far away'},
+           {id:'rain',   label:'Rain',   amb:'soft steady rain, no thunder'},
+           {id:'forest', label:'Forest', amb:'quiet forest air, leaves moving in a light wind'},
+           {id:'night',  label:'Night',  amb:'low night ambience, faint crickets very far off'},
+           {id:'none',   label:'Silence', amb:'near silence, only a very low warm room tone'} ] },
+
+  { key:'length', label:'Length', def:'standard',
+    opts:[ {id:'short',    label:'Short'},
+           {id:'standard', label:'Standard'},
+           {id:'long',     label:'Long'} ] },
+
+  { key:'chime', label:'Breathing chime', def:'on',
+    opts:[ {id:'on',  label:'On'},
+           {id:'off', label:'Off'} ] }
 ];
 
 /* ── What's going on — the multiple choice ──────── */
@@ -461,6 +503,16 @@ var BREATH = [
   'Let the breathing slow down to meet the chime. In as it rings. Out as it rings again. If you lose the rhythm, it will still be there when you come back.',
   'Breathe in with the chime, all the way through it. And out with the next one, all the way through. Slow enough that the breath feels almost lazy.'
 ];
+var BREATH_NOCHIME = [
+  'Now let the breath come in slowly, a long, quiet inhale. Count it out at about five slow seconds. And let it leave just as slowly, five seconds again. You do not have to be precise. Slow is the whole instruction.',
+  'Let the breathing lengthen. In for a slow count of five. Out for a slow count of five. If you lose the count, it does not matter. Just keep it unhurried.',
+  'Breathe in slowly, about five seconds. And out slowly, about five seconds. Slow enough that the breath feels almost lazy. Let the exhale be the part that takes its time.'
+];
+var DEEPEN = [
+  'Let it go one layer further now. Whatever softened a moment ago can soften again. There is always another layer, and you do not have to look for it. It arrives on its own when you stop hurrying.',
+  'And deeper still. Not by trying. By allowing. Each exhale takes a little more of the holding with it, and you do not have to decide which part goes.',
+  'Let the next few breaths take you further down than you have gone so far. Nothing to reach for. The body knows this direction well.'
+];
 var COHERENCE = [
   'This pace is not arbitrary. At around this speed, the heart and the breath fall into step with each other, and the nervous system reads that as safety. You are not imagining the calm. You are producing it.',
   'When the breath is this slow, the body stops preparing for something. The heart steadies. The chemistry changes. This is the oldest lever we have, and it is in your hands.',
@@ -565,17 +617,29 @@ function resolveThemes(selectedIds, detail){
 }
 
 /* ── Styles field ───────────────────────────────── */
-function buildStyle(mode){
+function tuneOpt(key, id){
+  var row = TUNE.filter(function(r){ return r.key === key; })[0];
+  return row.opts.filter(function(o){ return o.id === id; })[0] || row.opts[0];
+}
+
+function buildStyle(mode, tune){
+  var voice = tuneOpt('voice', tune.voice);
+  var scape = tuneOpt('scape', tune.scape);
+  var amb   = scape.amb || mode.ambience;
+
   var s =
 'Spoken word hypnosis, guided meditation, no singing. ' +
-'Natural human voice: calm, grounded, quiet volume, slow pacing, intimate and reassuring. ' +
+voice.style + ': calm, grounded, quiet volume, slow pacing, intimate and reassuring. ' +
 'Not theatrical, not robotic, no announcer tone. ' +
 'Minimal ambient soundscape only \u2014 no piano, no melody, no chords, no drums. ' +
-'Subtle natural ambience: ' + mode.ambience + '. ' +
-'A soft low chime every 5.5 seconds to pace the breathing \u2014 inhale for one chime, exhale for the next. ' +
+'Subtle natural ambience: ' + amb + '. ' +
+(tune.chime === 'off'
+  ? 'No chimes and no bells \u2014 unbroken, continuous soft ambience throughout. '
+  : 'A soft low chime every 5.5 seconds to pace the breathing \u2014 inhale for one chime, exhale for the next. ') +
 'Atmosphere: ' + mode.atmosphere + '. ' +
 'Long pauses between phrases. Plenty of silence. ' +
 'Purpose: relaxation, radical acceptance, nervous system regulation, healing.';
+
   if (s.length > LIMIT_STYLE) s = s.slice(0, LIMIT_STYLE - 1).replace(/\s+\S*$/,'') + '.';
   return s;
 }
@@ -608,40 +672,59 @@ function buildLyrics(opts){
       : ' This was made for you by someone who noticed.';
   }
 
-  var core = [ pick(OPEN), pick(SETTLE), head, pick(BREATH), pick(COHERENCE), pick(ACCEPT) ];
+  var len   = opts.tune.length;
+  var short = len === 'short', long = len === 'long';
+  var somaMax = short ? 1 : (long ? 4 : 3);
+  var breathPool = opts.tune.chime === 'off' ? BREATH_NOCHIME : BREATH;
 
-  /* Personalized middle — up to three somatic addresses */
+  var core = [ pick(OPEN) ];
+  if (!short) core.push(pick(SETTLE));
+  core.push(head, pick(breathPool));
+  if (!short) core.push(pick(COHERENCE));
+  core.push(pick(ACCEPT));
+  if (long) core.push(pick(DEEPEN));
+
+  /* Personalized middle — somatic addresses, count set by length */
   var mid = [];
   if (themes.length){
-    themes.slice(0,3).forEach(function(t){ mid.push(t.soma); });
+    themes.slice(0, somaMax).forEach(function(t){ mid.push(t.soma); });
   } else {
     mid.push('Let your attention move slowly through the body. The face. The throat. The chest. The belly. The hands. Wherever it lands, let that place soften by a fraction. You are not looking for anything. You are just letting yourself be visited.');
   }
-  mid.push(pick(INQUIRY));
+  if (!short) mid.push(pick(INQUIRY));
 
   var kind = pick(KINDNESS);
   if (name) kind = kind.replace('May you be at ease.', 'May you be at ease' + nm + '.');
   mid.push(kind);
 
-  var affs = themes.length ? themes.slice(0,3).map(function(t){ return t.aff; })
+  var affs = themes.length ? themes.slice(0, somaMax).map(function(t){ return t.aff; })
                            : ['This body knows how to heal. It is doing it now, without supervision.'];
   mid.push('Let these be said quietly, as though they were simply facts. ' + affs.join(' ') + ' I am safe. I am held. I am healing.');
 
-  var wishes = themes.length ? themes.slice(0,3).map(function(t){ return t.wish; })
+  var wishes = themes.length ? themes.slice(0, somaMax).map(function(t){ return t.wish; })
                              : ['Imagine yourself easy. Rested. At home in your own body. Not in the future. In this version of the moment.'];
   mid.push(pick(NEVILLE) + ' ' + wishes.join(' '));
 
   var SIGNOFF = { general:'Be well', sleep:'Sleep well', sunrise:'Go gently', reset:'Go gently' };
   var closing = pick(CLOSE[opts.mode.close]);
   if (name) closing += ' ' + SIGNOFF[opts.mode.close] + nm + '.';
-  var tail = [ pick(TRANSURF), pick(TRUST), pick(IDENTITY), closing ];
+
+  var tail = [];
+  if (!short) tail.push(pick(TRANSURF));
+  tail.push(pick(TRUST));
+  if (!short) tail.push(pick(IDENTITY));
+  tail.push(closing);
 
   var text = core.concat(mid, tail).join('\n\n');
   while (text.length > LIMIT_LYRIC && mid.length > 3){
     mid.splice(1,1);
     text = core.concat(mid, tail).join('\n\n');
   }
-  if (text.length > LIMIT_LYRIC) text = text.slice(0, LIMIT_LYRIC).replace(/\s+\S*$/,'');
+  if (text.length > LIMIT_LYRIC){
+    text = text.slice(0, LIMIT_LYRIC);
+    var stop = Math.max(text.lastIndexOf('. '), text.lastIndexOf('.\n'));
+    text = stop > LIMIT_LYRIC * 0.6 ? text.slice(0, stop + 1) : text.replace(/\s+\S*$/,'');
+  }
   return text;
 }
 
@@ -651,7 +734,44 @@ var detailEl=$('detail'), nameEl=$('name'), outEl=$('out'),
     styleEl=$('styleOut'), lyricEl=$('lyricOut'),
     styleCount=$('styleCount'), lyricCount=$('lyricCount'), goBtn=$('go');
 
-var state = { forOther:false, picks:[], mode:MODES[0] };
+function defaultTune(){
+  var t = {};
+  TUNE.forEach(function(r){ t[r.key] = r.def; });
+  return t;
+}
+var state = { forOther:false, picks:[], mode:MODES[0], tune:defaultTune() };
+
+/* 05 — curate rows */
+TUNE.forEach(function(row){
+  var wrap = document.createElement('div');
+  wrap.className = 'tune-row';
+  var l = document.createElement('span');
+  l.className = 'tune-l'; l.textContent = row.label;
+  var pills = document.createElement('div');
+  pills.className = 'pills'; pills.setAttribute('role','group');
+  pills.setAttribute('aria-label', row.label);
+  row.opts.forEach(function(o){
+    var b = document.createElement('button');
+    b.type='button';
+    b.className = 'pill' + (o.id === row.def ? ' on' : '');
+    b.textContent = o.label;
+    b.dataset.key = row.key; b.dataset.id = o.id;
+    b.setAttribute('aria-pressed', o.id === row.def ? 'true' : 'false');
+    b.setAttribute('aria-label', row.label + ': ' + o.label);
+    b.addEventListener('click', function(){
+      state.tune[row.key] = o.id;
+      Array.prototype.forEach.call(pills.children, function(el){
+        var on = el === b;
+        el.classList.toggle('on', on);
+        el.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      save();
+    });
+    pills.appendChild(b);
+  });
+  wrap.appendChild(l); wrap.appendChild(pills);
+  $('tune').appendChild(wrap);
+});
 
 /* 01 — who */
 var WHO = [
@@ -748,13 +868,14 @@ lyricEl.addEventListener('input', refreshCounts);
 
 function generate(){
   if (!ready()) return;
-  styleEl.value = buildStyle(state.mode);
+  styleEl.value = buildStyle(state.mode, state.tune);
   lyricEl.value = buildLyrics({
     picks: state.picks,
     detail: detailEl.value,
     name: cleanName(nameEl.value),
     forOther: state.forOther,
-    mode: state.mode
+    mode: state.mode,
+    tune: state.tune
   });
   refreshCounts();
   outEl.classList.add('show');
@@ -766,20 +887,20 @@ function generate(){
 goBtn.addEventListener('click', generate);
 $('again').addEventListener('click', generate);
 $('reset').addEventListener('click', function(){
-  state = { forOther:false, picks:[], mode:MODES[0] };
+  state = { forOther:false, picks:[], mode:MODES[0], tune:defaultTune() };
   detailEl.value=''; nameEl.value='';
   Array.prototype.forEach.call(document.querySelectorAll('.pick'), function(el){
     el.classList.remove('on'); el.setAttribute('aria-pressed','false');
   });
-  Array.prototype.forEach.call($('who').children, function(el, i){
-    el.classList.toggle('on', i===0); el.setAttribute('aria-pressed', i===0?'true':'false');
+  TUNE.forEach(function(row){
+    Array.prototype.forEach.call(document.querySelectorAll('.pill[data-key="'+row.key+'"]'), function(el){
+      var on = el.dataset.id === row.def;
+      el.classList.toggle('on', on); el.setAttribute('aria-pressed', on?'true':'false');
+    });
   });
-  Array.prototype.forEach.call(document.querySelectorAll('.mode'), function(el, i){
-    el.classList.toggle('on', i===0); el.setAttribute('aria-pressed', i===0?'true':'false');
-  });
-  $('namewrap').classList.remove('show');
-  $('whatTitle').textContent = "What's going on?";
-  detailEl.placeholder = 'I have stuffed sinuses and feel exhausted…';
+  /* Click the real buttons so every piece of copy resets with them */
+  $('who').children[0].click();
+  document.querySelectorAll('.mode')[0].click();
   outEl.classList.remove('show');
   try { localStorage.removeItem('75healed-hh'); } catch(e){}
   validate();
@@ -815,7 +936,7 @@ function fallback(ta, done){
 function save(){
   try {
     localStorage.setItem('75healed-hh', JSON.stringify({
-      o: state.forOther, p: state.picks, m: state.mode.id, d: detailEl.value, n: nameEl.value
+      o: state.forOther, p: state.picks, m: state.mode.id, d: detailEl.value, n: nameEl.value, t: state.tune
     }));
   } catch(e){}
 }
@@ -839,6 +960,14 @@ function load(){
       var idx = -1;
       MODES.forEach(function(m,i){ if (m.id === d.m) idx = i; });
       if (idx > -1) document.querySelectorAll('.mode')[idx].click();
+    }
+    if (d.t){
+      TUNE.forEach(function(row){
+        var val = d.t[row.key];
+        if (!val) return;
+        var b = document.querySelector('.pill[data-key="'+row.key+'"][data-id="'+val+'"]');
+        if (b) b.click();
+      });
     }
   } catch(e){}
   validate();
