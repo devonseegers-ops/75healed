@@ -30,13 +30,17 @@
   --teal:#8ab89a;
   --teal-dim:rgba(138,184,154,.55);
   --gold:#C9A84C;
+  /* drawn from the coherence bloom */
+  --rose:#C98E92;
+  --peach:#E0B49A;
+  --bloom:url("data:image/jpeg;base64,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");
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Inter',sans-serif;background:var(--black);color:var(--silver);font-weight:300;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
 /* ── NAV ─────────────────────────────────────────── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;background:linear-gradient(180deg,rgba(5,6,8,.96) 0%,rgba(5,6,8,.82) 55%,rgba(5,6,8,0) 100%);}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;background:linear-gradient(180deg,rgba(5,6,8,.97) 0%,rgba(5,6,8,.88) 62%,rgba(5,6,8,0) 100%);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
 .nav-logo{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;letter-spacing:5px;color:var(--white);text-decoration:none;}
 .nav-links{display:flex;gap:40px;list-style:none;}
 .nav-links a{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .3s;}
@@ -45,11 +49,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-cta:hover{background:var(--teal);}
 
 /* ── ORB ─────────────────────────────────────────── */
-.orb{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);width:720px;height:720px;border-radius:50%;
-  background:radial-gradient(ellipse at 35% 35%,rgba(200,210,220,.14) 0%,rgba(120,135,165,.055) 32%,rgba(80,95,125,.025) 58%,transparent 72%);
-  box-shadow:inset 0 0 100px rgba(160,175,205,.05),0 0 300px rgba(138,184,154,.03);
-  animation:breathe 11s ease-in-out infinite;pointer-events:none;z-index:0;}
-@keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(.94);opacity:.75;}50%{transform:translate(-50%,-50%) scale(1.04);opacity:1;}}
+/* Watercolour washes lifted from the #75HEALED coherence bloom.
+   Feathered with a radial mask so they read as pigment on wet paper. */
+.orb,.orb2{position:fixed;pointer-events:none;z-index:0;background-image:var(--bloom);
+  background-size:cover;background-position:center;mix-blend-mode:screen;border-radius:50%;
+  -webkit-mask-image:radial-gradient(circle at 50% 50%,rgba(0,0,0,.95) 0%,rgba(0,0,0,.72) 22%,rgba(0,0,0,.38) 42%,rgba(0,0,0,.14) 58%,transparent 72%);
+  mask-image:radial-gradient(circle at 50% 50%,rgba(0,0,0,.95) 0%,rgba(0,0,0,.72) 22%,rgba(0,0,0,.38) 42%,rgba(0,0,0,.14) 58%,transparent 72%);}
+.orb{top:-26%;right:-24%;width:1500px;height:1500px;opacity:.72;
+  animation:breathe 11s ease-in-out infinite;}
+.orb2{bottom:-28%;left:-26%;width:1300px;height:1300px;opacity:.52;transform:scaleX(-1);
+  animation:breathe2 17s ease-in-out infinite;}
+@keyframes breathe{0%,100%{transform:scale(.96);opacity:.62;}50%{transform:scale(1.06);opacity:.80;}}
+@keyframes breathe2{0%,100%{transform:scaleX(-1) scale(1.04);opacity:.44;}50%{transform:scaleX(-1) scale(.94);opacity:.60;}}
+/* paper grain */
+body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.09;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");}
 
 /* ── LAYOUT ──────────────────────────────────────── */
 .wrap{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:150px 40px 40px;}
@@ -59,7 +73,7 @@ h1 em{font-style:italic;color:var(--silver-hi);}
 .tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:300;font-style:italic;
   color:var(--silver-hi);line-height:1.5;margin:-8px 0 22px;}
 .lede{font-size:1rem;line-height:1.95;color:var(--silver);max-width:560px;}
-.rule{width:48px;height:1px;background:linear-gradient(90deg,var(--teal),transparent);margin:44px 0;}
+.rule{width:72px;height:1px;background:linear-gradient(90deg,var(--teal),var(--rose),transparent);margin:44px 0;}
 
 .step{margin-bottom:54px;}
 .step-head{display:flex;align-items:baseline;gap:16px;margin-bottom:14px;}
@@ -70,9 +84,9 @@ h1 em{font-style:italic;color:var(--silver-hi);}
 
 /* ── SEGMENTED (who for) ─────────────────────────── */
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);}
-.seg button{background:var(--dark);border:none;cursor:pointer;padding:22px 26px;text-align:left;font-family:'Inter',sans-serif;transition:background .35s;}
-.seg button:hover{background:var(--mid);}
-.seg button.on{background:var(--mid);box-shadow:inset 2px 0 0 var(--teal);}
+.seg button{background:rgba(18,20,26,.72);backdrop-filter:blur(6px);border:none;cursor:pointer;padding:22px 26px;text-align:left;font-family:'Inter',sans-serif;transition:background .35s;}
+.seg button:hover{background:rgba(26,29,38,.82);}
+.seg button.on{background:rgba(26,29,38,.86);box-shadow:inset 2px 0 0 var(--teal);}
 .seg-m{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--white);margin-bottom:5px;transition:color .3s;}
 .seg button.on .seg-m{color:var(--teal);}
 .seg-d{font-size:.77rem;line-height:1.6;color:var(--silver);opacity:.8;}
@@ -102,9 +116,9 @@ textarea:focus{border-color:var(--teal);background:rgba(255,255,255,.05);}
 textarea::placeholder{color:rgba(255,255,255,.22);}
 
 .modes{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);}
-.mode{background:var(--dark);border:none;cursor:pointer;text-align:left;padding:24px 26px;transition:background .35s;font-family:'Inter',sans-serif;}
-.mode:hover{background:var(--mid);}
-.mode.on{background:var(--mid);box-shadow:inset 2px 0 0 var(--teal);}
+.mode{background:rgba(18,20,26,.72);backdrop-filter:blur(6px);border:none;cursor:pointer;text-align:left;padding:24px 26px;transition:background .35s;font-family:'Inter',sans-serif;}
+.mode:hover{background:rgba(26,29,38,.82);}
+.mode.on{background:rgba(26,29,38,.86);box-shadow:inset 2px 0 0 var(--teal);}
 .mode-m{font-family:'Cormorant Garamond',serif;font-size:1.28rem;font-weight:400;color:var(--white);margin-bottom:6px;transition:color .3s;}
 .mode.on .mode-m{color:var(--teal);}
 .mode-d{font-size:.78rem;line-height:1.65;color:var(--silver);opacity:.82;font-weight:300;}
@@ -126,7 +140,7 @@ textarea::placeholder{color:rgba(255,255,255,.22);}
 /* ── CONTEXT STRIP ───────────────────────────────── */
 .context{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.06);margin-top:44px;}
-.ctx{background:var(--dark);padding:26px 24px;}
+.ctx{background:rgba(18,20,26,.7);backdrop-filter:blur(6px);padding:26px 24px;}
 .ctx-l{display:block;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal-dim);margin-bottom:12px;}
 .ctx p{font-size:.83rem;line-height:1.8;color:var(--silver);}
 .ctx-note{font-size:.76rem;line-height:1.9;color:rgba(255,255,255,.38);margin-top:16px;max-width:620px;}
@@ -134,19 +148,22 @@ textarea::placeholder{color:rgba(255,255,255,.22);}
 .ctx-note a:hover{color:var(--teal);}
 
 /* ── QUOTE BREATHER (from the journal) ───────────── */
-.breather{margin:52px 0 0;padding:34px 0 0;border-top:1px solid rgba(255,255,255,.07);}
+.breather{position:relative;margin:52px 0 0;padding:38px 0 6px;border-top:1px solid rgba(255,255,255,.07);}
+.breather::before{content:'';position:absolute;top:-40px;left:-70px;width:300px;height:300px;z-index:-1;
+  background-image:var(--bloom);background-size:cover;mix-blend-mode:screen;opacity:.42;border-radius:50%;
+  -webkit-mask-image:radial-gradient(circle,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 35%,transparent 68%);mask-image:radial-gradient(circle,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 35%,transparent 68%);}
 .breather blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.25rem,2.6vw,1.75rem);font-weight:300;font-style:italic;
   color:var(--silver-hi);line-height:1.55;max-width:620px;}
-.breather figcaption{margin-top:18px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+.breather figcaption{margin-top:20px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
   font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal-dim);}
 .bq-p{color:rgba(255,255,255,.2);letter-spacing:3px;}
 
 /* ── INFLUENCES ──────────────────────────────────── */
 .inf-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.05);margin-bottom:26px;}
-.inf{background:var(--dark);border:none;cursor:pointer;text-align:left;padding:18px 20px;display:flex;gap:12px;align-items:flex-start;
+.inf{background:rgba(18,20,26,.7);backdrop-filter:blur(6px);border:none;cursor:pointer;text-align:left;padding:18px 20px;display:flex;gap:12px;align-items:flex-start;
   font-family:'Inter',sans-serif;transition:background .3s;}
-.inf:hover{background:var(--mid);}
-.inf.on{background:var(--mid);box-shadow:inset 2px 0 0 var(--teal);}
+.inf:hover{background:rgba(26,29,38,.82);}
+.inf.on{background:rgba(26,29,38,.86);box-shadow:inset 2px 0 0 var(--teal);}
 .inf .tick{width:13px;height:13px;border:1px solid rgba(255,255,255,.25);flex-shrink:0;position:relative;margin-top:4px;transition:all .28s;}
 .inf.on .tick{background:var(--teal);border-color:var(--teal);}
 .inf.on .tick::after{content:'';position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid var(--black);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);}
@@ -164,10 +181,10 @@ textarea::placeholder{color:rgba(255,255,255,.22);}
 .tune-row{display:flex;align-items:center;gap:20px;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;}
 .tune-l{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);opacity:.75;min-width:132px;flex-shrink:0;}
 .pills{display:flex;gap:1px;background:rgba(255,255,255,.07);flex-wrap:wrap;}
-.pill{background:var(--dark);border:none;color:var(--silver);cursor:pointer;font-family:'Inter',sans-serif;
+.pill{background:rgba(18,20,26,.72);border:none;color:var(--silver);cursor:pointer;font-family:'Inter',sans-serif;
   font-size:.76rem;font-weight:300;padding:11px 17px;transition:all .28s;line-height:1.4;}
-.pill:hover{background:var(--mid);color:var(--white);}
-.pill.on{background:var(--mid);color:var(--teal);box-shadow:inset 0 -2px 0 var(--teal);}
+.pill:hover{background:rgba(26,29,38,.85);color:var(--white);}
+.pill.on{background:rgba(26,29,38,.9);color:var(--teal);box-shadow:inset 0 -2px 0 var(--teal);}
 
 /* ── BUTTONS ─────────────────────────────────────── */
 .gen-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
@@ -185,7 +202,7 @@ textarea::placeholder{color:rgba(255,255,255,.22);}
 #out.show{display:block;animation:fi .8s ease both;}
 @keyframes fi{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 
-.field{border:1px solid rgba(255,255,255,.08);background:var(--near-black);margin-bottom:24px;}
+.field{border:1px solid rgba(255,255,255,.08);background:rgba(12,13,18,.82);backdrop-filter:blur(8px);margin-bottom:24px;}
 .field-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;}
 .field-label{display:flex;align-items:baseline;gap:12px;}
 .field-n{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:3px;color:var(--teal-dim);}
@@ -225,7 +242,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   .nav-links{display:none;}
   .wrap{padding:120px 22px 30px;}
   .modes,.seg,.inf-grid,.context{grid-template-columns:1fr;}
-  .orb{width:400px;height:400px;}
+  .orb{width:620px;height:620px;right:-40%;}
+  .orb2{width:520px;height:520px;left:-40%;}
   footer{padding:44px 22px;flex-direction:column;}
   .field-head{flex-direction:column;align-items:flex-start;gap:12px;}
   .btn-main,.btn-ghost{width:100%;text-align:center;}
@@ -233,7 +251,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   input[type=text]{max-width:100%;}
 }
 @media(prefers-reduced-motion:reduce){
-  .orb{animation:none;}
+  .orb,.orb2{animation:none;}
   #out.show,.namewrap.show{animation:none;}
   html{scroll-behavior:auto;}
 }
@@ -242,6 +260,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
 <body>
 
 <div class="orb" aria-hidden="true"></div>
+<div class="orb2" aria-hidden="true"></div>
 
 <nav>
   <a href="https://75healed.com/" class="nav-logo">#75HEALED</a>
@@ -489,20 +508,20 @@ var MODES = [
    The strongest lines from the 75, two per pillar, shown
    on the page with attribution the way the journal does it. */
 var QUOTES = [
-  { q:'Natural forces within us are the true healers of disease.', a:'Hippocrates', p:'The Inner Healer' },
-  { q:'The physician treats, but nature heals.', a:'Hippocrates', p:'The Inner Healer' },
-  { q:'The good physician treats the disease; the great physician treats the patient who has the disease.', a:'William Osler', p:'Treat the Person, Not the Symptom' },
-  { q:'It is far more important to know what person the disease has than what disease the person has.', a:'Hippocrates', p:'Treat the Person, Not the Symptom' },
-  { q:'Between stimulus and response there is a space. In that space is our power to choose our response.', a:'Viktor E. Frankl', p:'Suffering as Signal' },
-  { q:'Those who have a why to live can bear with almost any how.', a:'Viktor E. Frankl', p:'Suffering as Signal' },
-  { q:'When an inner situation is not made conscious, it happens outside, as fate.', a:'Carl Jung', p:'The Unconscious as Fate' },
-  { q:'We cannot change anything unless we accept it. Condemnation does not liberate, it oppresses.', a:'Carl Jung', p:'The Unconscious as Fate' },
+  { q:'Sorrow prepares you for joy. It violently sweeps everything out of your house, so that new joy can find space to enter. Whatever sorrow shakes from your heart, far better things will take their place.', a:'Rumi', p:'The Wound as Coherence Point' },
+  { q:'Grief can be the garden of compassion. If you keep your heart open through everything, your pain can become your greatest ally in your life’s search for love and wisdom.', a:'Rumi', p:'The Wound as Coherence Point' },
   { q:'The wound is the place where the Light enters you.', a:'Rumi', p:'The Wound as Coherence Point' },
   { q:'Do not grieve. Anything you lose comes round in another form.', a:'Rumi', p:'The Wound as Coherence Point' },
-  { q:'You have power over your mind, not outside events. Realize this, and you will find strength.', a:'Marcus Aurelius', p:'Nervous System Agency' },
+  { q:'Natural forces within us are the true healers of disease.', a:'Hippocrates', p:'The Inner Healer' },
+  { q:'The physician treats, but nature heals.', a:'Hippocrates', p:'The Inner Healer' },
+  { q:'Look within. Within is the fountain of good, and it will ever bubble up, if thou wilt ever dig.', a:'Marcus Aurelius', p:'Nervous System Agency' },
   { q:'We suffer more in imagination than in reality.', a:'Seneca', p:'Nervous System Agency' },
   { q:'Our sorrows and wounds are healed only when we touch them with compassion.', a:'The Buddha', p:'The Coherence Field' },
   { q:'Peace comes from within. Do not seek it without.', a:'The Buddha', p:'The Coherence Field' },
+  { q:'Your visions will become clear only when you can look into your own heart. Who looks outside, dreams; who looks inside, awakes.', a:'Carl Jung', p:'The Unconscious as Fate' },
+  { q:'Out of suffering have emerged the strongest souls; the most massive characters are seared with scars.', a:'Khalil Gibran', p:'The Wound as Coherence Point' },
+  { q:'The body heals with play, the mind heals with laughter, and the spirit heals with joy.', a:'Proverb', p:'The Coherence Field' },
+  { q:'The only journey is the journey within.', a:'Rainer Maria Rilke', p:'The Coherence Field' },
   { q:'Knowing yourself is the beginning of all wisdom.', a:'Aristotle', p:'The Coherence Field' }
 ];
 
