@@ -200,8 +200,12 @@ textarea::placeholder{color:rgba(255,255,255,.22);}
 .copy.done{background:var(--teal);border-color:var(--teal);color:var(--black);}
 .field textarea{border:none;background:transparent;min-height:0;padding:22px 24px;font-size:.86rem;line-height:1.85;color:var(--silver-hi);}
 .field textarea:focus{background:rgba(255,255,255,.02);}
-#styleOut{height:150px;}
+#styleOut{height:170px;}
 #lyricOut{height:400px;}
+#exclOut{height:130px;}
+.suno-warn{font-size:.82rem;line-height:1.9;color:rgba(255,255,255,.5);margin:-4px 0 22px;
+  padding-left:16px;border-left:1px solid rgba(201,168,76,.35);}
+.suno-warn strong{color:var(--gold);font-weight:400;}
 
 .suno{border:1px solid rgba(138,184,154,.22);background:rgba(138,184,154,.035);padding:28px 30px;margin:36px 0 12px;}
 .suno-t{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--white);margin-bottom:16px;font-weight:400;}
@@ -254,7 +258,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   <span class="eye">#75HEALED · Free</span>
   <h1>Personalized<br><em>Healing Hypnosis</em></h1>
   <p class="tagline">Tell it what's going on. Then it's yours.</p>
-  <p class="lede">Tick what you're feeling, choose which traditions you want in it, and you'll get two blocks of text. Paste them into Suno's two fields — that's the whole process. Make one for yourself, or for someone you love.</p>
+  <p class="lede">Tick what you're feeling, choose which traditions you want in it, and you'll get the text Suno needs. Paste it into the matching fields — that's the whole process. Make one for yourself, or for someone you love.</p>
 
   <div class="context">
     <div class="ctx">
@@ -346,8 +350,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   <!-- OUTPUT -->
   <section id="out" aria-live="polite">
     <div class="rule"></div>
-    <div class="step-head"><span class="step-n">07</span><h2 class="step-t">Copy these two into Suno</h2></div>
-    <p class="step-sub">Two fields. Nothing else to configure.</p>
+    <div class="step-head"><span class="step-n">07</span><h2 class="step-t">Copy these into Suno</h2></div>
+    <p class="step-sub">Copy each one into the matching Suno field. Nothing else to configure.</p>
 
     <div class="field">
       <div class="field-head">
@@ -371,14 +375,27 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
       <textarea id="lyricOut" aria-label="Lyrics — paste into Suno's second field" spellcheck="false"></textarea>
     </div>
 
+    <div class="field">
+      <div class="field-head">
+        <div class="field-label"><span class="field-n">III</span><span class="field-t">Exclude<small>Suno field 3 · optional</small></span></div>
+        <div class="field-actions">
+          <span class="count" id="exclCount"></span>
+          <button class="copy" data-target="exclOut" aria-label="Copy the Exclude text">Copy</button>
+        </div>
+      </div>
+      <textarea id="exclOut" aria-label="Exclude — paste into Suno's Exclude field under Advanced Options" spellcheck="false"></textarea>
+    </div>
+
     <div class="suno">
       <p class="suno-t">Where these go</p>
       <ol>
         <li>Open Suno and switch to <strong>Custom</strong> mode.</li>
         <li>Paste <strong>I — Styles</strong> into the Styles field.</li>
         <li>Paste <strong>II — Lyrics</strong> into the Lyrics field.</li>
+        <li>Open <strong>Advanced Options</strong> and paste <strong>III — Exclude</strong> into the Exclude field.</li>
         <li>Press Create.</li>
       </ol>
+      <p class="suno-warn"><strong>If it comes back sung.</strong> Suno is a music model, so now and then it will ignore all of this and give you a dramatic vocal anyway. It's a tendency, not a setting. Just press Create again — the third field and the tag at the top of the lyrics make a spoken take much more likely, and the next roll usually lands. Keep the take where the voice just talks.</p>
       <div class="gen-row">
         <a class="btn-ghost" href="https://suno.com/create" target="_blank" rel="noopener">Open Suno</a>
         <button class="btn-ghost" id="again">New version</button>
@@ -600,9 +617,17 @@ var INF_GROUPS = [
 /* ── Curate the sound — every row has a default ─── */
 var TUNE = [
   { key:'voice', label:'Voice', def:'natural',
-    opts:[ {id:'natural', label:'No preference', style:'Natural human voice'},
-           {id:'female',  label:"Woman's voice", style:'Natural female human voice'},
-           {id:'male',    label:"Man's voice",   style:'Natural male human voice'} ] },
+    opts:[ {id:'natural', label:'No preference', style:'A natural human voice'},
+           {id:'female',  label:"Woman's voice", style:'A natural female human voice'},
+           {id:'male',    label:"Man's voice",   style:'A natural male human voice'} ] },
+
+  { key:'delivery', label:'Delivery', def:'calm',
+    opts:[ {id:'calm',    label:'Calm spoken',
+             style:'speaking calmly and quietly, slow and unhurried, intimate and reassuring'},
+           {id:'asmr',    label:'Whispered ASMR',
+             style:'almost whispering, very close to the microphone, soft breathy ASMR delivery, barely above a murmur'},
+           {id:'warm',    label:'Warm and close',
+             style:'speaking low and warm, close-mic, like someone sitting beside you in a dark room'} ] },
 
   { key:'scape', label:'Soundscape', def:'match',
     opts:[ {id:'match',  label:'Match the track', amb:null},
@@ -878,26 +903,41 @@ function tuneOpt(key, id){
   return row.opts.filter(function(o){ return o.id === id; })[0] || row.opts[0];
 }
 
+/* Suno's default instinct is to sing. Everything here pushes the other
+   way: spoken-word framing first, the word "song" never used, and the
+   anti-singing language repeated in three places. */
 function buildStyle(mode, tune){
   var voice = tuneOpt('voice', tune.voice);
+  var deliv = tuneOpt('delivery', tune.delivery);
   var scape = tuneOpt('scape', tune.scape);
   var amb   = scape.amb || mode.ambience;
 
   var s =
-'Spoken word hypnosis, guided meditation, no singing. ' +
-voice.style + ': calm, grounded, quiet volume, slow pacing, intimate and reassuring. ' +
-'Not theatrical, not robotic, no announcer tone. ' +
-'Minimal ambient soundscape only \u2014 no piano, no melody, no chords, no drums. ' +
+'Spoken word narration. Guided hypnosis recording. ASMR. Audiobook voiceover. ' +
+'Pure speaking voice from start to finish. No singing, no melody, no chorus, no rhythm, no beat. ' +
+voice.style + ' ' + deliv.style + '. ' +
+'Completely flat and even delivery. Not theatrical, not dramatic, not performed, no announcer tone. ' +
+'Minimal ambient underscore only, kept far beneath the voice \u2014 no piano, no chords, no drums, no melodic instruments, no swells. ' +
 'Subtle natural ambience: ' + amb + '. ' +
 (tune.chime === 'off'
-  ? 'No chimes and no bells \u2014 unbroken, continuous soft ambience throughout. '
-  : 'A soft low chime every 5.5 seconds to pace the breathing \u2014 inhale for one chime, exhale for the next. ') +
+  ? 'No chimes and no bells. Unbroken, continuous soft ambience throughout. '
+  : 'A soft low chime every 5.5 seconds to pace the breathing, inhale for one chime, exhale for the next. ') +
 'Atmosphere: ' + mode.atmosphere + '. ' +
-'Long pauses between phrases. Plenty of silence. ' +
+'Long pauses and plenty of silence between phrases. ' +
 'Purpose: relaxation, radical acceptance, nervous system regulation, healing.';
 
   if (s.length > LIMIT_STYLE) s = s.slice(0, LIMIT_STYLE - 1).replace(/\s+\S*$/,'') + '.';
   return s;
+}
+
+/* Suno's Exclude field, under Custom \u2192 Advanced Options. Guidance rather
+   than a hard filter, but it measurably reduces the sung takes. */
+function buildExclude(){
+  return 'singing, sung vocals, vocal melody, chorus, hook, verse, refrain, ' +
+         'harmonies, backing vocals, choir, vocal runs, vibrato, belting, falsetto, autotune, ' +
+         'rap, spoken-word poetry performance, theatrical narration, announcer voice, radio DJ, ' +
+         'drums, percussion, beat, bass, piano, guitar, strings, synth lead, orchestral swell, ' +
+         'crescendo, dramatic build, energetic, upbeat, cinematic trailer, heavy reverb on the voice';
 }
 
 /* ── Lyrics field ───────────────────────────────── */
@@ -1016,7 +1056,11 @@ function buildLyrics(opts){
     add('Let the breath lengthen, and let the body be exactly as it is. Nothing here needs fixing in the next few minutes.', 10);
   }
 
-  var render = function(list){ return list.map(function(p){ return p.t; }).join('\n\n'); };
+  /* One leading tag. Suno treats a bracketed tag as a directive and does
+     not vocalise it — this is the single strongest nudge away from singing.
+     Exactly one, at the top, so there is nothing mid-script to misread. */
+  var TAG = '[Spoken narration, no singing]';
+  var render = function(list){ return TAG + '\n\n' + list.map(function(p){ return p.t; }).join('\n\n'); };
   var text = render(parts);
 
   /* Release the lowest-priority passages until it fits. The opening,
@@ -1046,8 +1090,8 @@ function buildLyrics(opts){
 /* ── DOM ────────────────────────────────────────── */
 var $ = function(id){ return document.getElementById(id); };
 var detailEl=$('detail'), nameEl=$('name'), outEl=$('out'),
-    styleEl=$('styleOut'), lyricEl=$('lyricOut'),
-    styleCount=$('styleCount'), lyricCount=$('lyricCount'), goBtn=$('go');
+    styleEl=$('styleOut'), lyricEl=$('lyricOut'), exclEl=$('exclOut'),
+    styleCount=$('styleCount'), lyricCount=$('lyricCount'), exclCount=$('exclCount'), goBtn=$('go');
 
 function defaultTune(){
   var t = {};
@@ -1249,13 +1293,16 @@ function setCount(el, span, limit){
 function refreshCounts(){
   setCount(styleEl, styleCount, LIMIT_STYLE);
   setCount(lyricEl, lyricCount, LIMIT_LYRIC);
+  setCount(exclEl,  exclCount,  LIMIT_STYLE);
 }
 styleEl.addEventListener('input', refreshCounts);
 lyricEl.addEventListener('input', refreshCounts);
+exclEl.addEventListener('input', refreshCounts);
 
 function generate(){
   if (!ready()) return;
   styleEl.value = buildStyle(state.mode, state.tune);
+  exclEl.value  = buildExclude();
   lyricEl.value = buildLyrics({
     picks: state.picks,
     detail: detailEl.value,
