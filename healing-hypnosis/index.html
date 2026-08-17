@@ -74,13 +74,29 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(2.7rem,7vw,4.8rem);font-
 h1 em{font-style:italic;font-weight:400;color:var(--sage-dark);}
 .tagline{font-family:'Playfair Display',serif;font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:400;font-style:italic;color:var(--ink-mid);line-height:1.5;margin:0 0 20px;}
 .lede{font-size:1.02rem;line-height:1.95;color:var(--ink-mid);max-width:540px;}
-.breath-cue{display:flex;align-items:center;gap:14px;margin-top:44px;}
-.breath-dot{width:14px;height:14px;border-radius:50%;background:var(--sage);opacity:.85;animation:dotbreathe 11s ease-in-out infinite;}
-@keyframes dotbreathe{0%,100%{transform:scale(.7);}50%{transform:scale(1.35);}}
-#breathWord{font-size:.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--sage);transition:opacity .9s ease;}
-.scroll-cue{display:inline-block;margin-top:34px;font-size:.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--cream);
-  background:var(--sage-dark);padding:15px 38px;border-radius:999px;text-decoration:none;box-shadow:var(--shadow-sm);transition:all .35s;}
-.scroll-cue:hover{background:var(--sage);transform:translateY(-2px);box-shadow:var(--shadow);}
+.breathe-wrap{margin-top:40px;display:flex;flex-direction:column;align-items:flex-start;gap:14px;}
+.breathe{position:relative;width:148px;height:148px;display:grid;place-items:center;text-decoration:none;cursor:pointer;
+  --p:0;--sc:calc(.72 + .28 * var(--p));border-radius:50%;outline:none;}
+.breathe:focus-visible{box-shadow:0 0 0 3px rgba(74,107,93,.35);}
+.breathe .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(74,107,93,.28);
+  transform:scale(var(--sc));transition:transform .12s linear;}
+.breathe .r2{inset:14px;border-color:rgba(74,107,93,.22);--sc:calc(.78 + .22 * var(--p));}
+.breathe .r3{inset:28px;border-color:rgba(74,107,93,.18);--sc:calc(.84 + .16 * var(--p));}
+.breathe .core{position:absolute;inset:44px;border-radius:50%;
+  background:radial-gradient(circle at 38% 34%,#8FB4A0 0%,var(--sage) 58%,var(--sage-dark) 100%);
+  box-shadow:0 0 0 0 rgba(74,107,93,.28),0 6px 24px rgba(44,59,52,.22);
+  transform:scale(calc(.62 + .38 * var(--p)));transition:transform .12s linear,box-shadow .12s linear;}
+.breathe .core::after{content:'';position:absolute;inset:0;border-radius:50%;
+  background:var(--bloom);background-size:cover;mix-blend-mode:soft-light;opacity:.55;}
+.breathe .word{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--sage);transition:opacity .5s ease;}
+.breathe.done .word{color:var(--cream);background:var(--sage-dark);padding:13px 34px;border-radius:999px;
+  box-shadow:var(--shadow-sm);bottom:-46px;font-size:.72rem;transition:all .5s ease;}
+.breathe.done:hover .word{background:var(--sage);}
+.breathe.done .core{animation:idle 11s ease-in-out infinite;}
+@keyframes idle{0%,100%{transform:scale(.72);}50%{transform:scale(.86);}}
+.breathe-hint{font-size:.66rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:34px;transition:opacity .6s ease;}
+.breathe.done ~ .breathe-hint{opacity:0;}
 
 /* ---------- page body ---------- */
 .wrap{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:30px 40px 40px;}
@@ -252,12 +268,13 @@ footer{background:var(--sage-dark);padding:54px 56px;margin-top:96px;display:fle
   .orb2{width:600px;height:600px;left:-44%;}
   footer{padding:42px 22px;flex-direction:column;}
   .field-head{flex-direction:column;align-items:flex-start;gap:12px;}
-  .btn-main,.btn-ghost,.scroll-cue{width:100%;text-align:center;}
+  .btn-main,.btn-ghost{width:100%;text-align:center;}
+  .breathe-wrap{align-items:center;width:100%;}
   .gen-row{gap:14px;}
   input[type=text]{max-width:100%;}
 }
 @media(prefers-reduced-motion:reduce){
-  .orb,.orb2,.breath-dot{animation:none;}
+  .orb,.orb2,.breathe .core{animation:none;}
   #out.show,.namewrap.show{animation:none;}
   html{scroll-behavior:auto;}
   .hero-bg,.hero-veil,.hero-inner{transition:none;}
@@ -290,8 +307,16 @@ footer{background:var(--sage-dark);padding:54px 56px;margin-top:96px;display:fle
     <h1>Personalized<br><em>Healing Hypnosis</em></h1>
     <p class="tagline">Tell it what's going on. Then it's yours.</p>
     <p class="lede">Tick what you're feeling, choose which healing traditions you want woven in, and paste the result into Suno. That's the whole process. Make one for yourself, or for someone you love.</p>
-    <div class="breath-cue"><span class="breath-dot" aria-hidden="true"></span><span id="breathWord" aria-hidden="true">breathe in</span></div>
-    <br><a class="scroll-cue" href="#begin">Begin</a>
+    <div class="breathe-wrap">
+      <a class="breathe" id="breathe" href="#begin" aria-label="Take one deep breath, then begin">
+        <span class="ring r1" aria-hidden="true"></span>
+        <span class="ring r2" aria-hidden="true"></span>
+        <span class="ring r3" aria-hidden="true"></span>
+        <span class="core" aria-hidden="true"></span>
+        <span class="word" id="breathWord">breathe in</span>
+      </a>
+      <span class="breathe-hint" id="breathHint">one deep breath</span>
+    </div>
   </div>
 </header>
 
@@ -1461,19 +1486,43 @@ var arrive=function(){ document.body.classList.add('arrived'); };
 requestAnimationFrame(function(){ requestAnimationFrame(arrive); });
 setTimeout(arrive, 900); /* background tabs: rAF never fires while hidden */
 
-/* Breathing cue words, on the 5.5s rhythm */
-var bw = $('breathWord');
-if (bw && !reduce){
-  var inhale = true;
-  setInterval(function(){
-    bw.style.opacity = 0;
-    setTimeout(function(){
-      inhale = !inhale;
-      bw.textContent = inhale ? 'breathe in' : 'breathe out';
-      bw.style.opacity = 1;
-    }, 900);
-  }, 5500);
-} else if (bw){ bw.textContent = 'breathe'; }
+/* One deep breath on arrival: 5.5s in, 5.5s out, on the coherence rhythm.
+   Then the circle settles into a gentle idle and becomes the Begin button. */
+var breathe = $('breathe'), bw = $('breathWord'), bh = $('breathHint');
+if (breathe){
+  var IN = 5500, OUT = 5500;
+  var setP = function(p){ breathe.style.setProperty('--p', p.toFixed(3)); };
+  var ease = function(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t; };
+  var finish = function(){
+    breathe.classList.add('done');
+    bw.textContent = 'Begin';
+    setP(0);
+  };
+  if (reduce){ finish(); }
+  else {
+    var start = null, phase = 'in';
+    bw.textContent = 'breathe in';
+    var frame = function(ts){
+      if (!start) start = ts;
+      var t = ts - start;
+      if (phase === 'in'){
+        setP(ease(Math.min(t/IN,1)));
+        if (t >= IN){ phase = 'out'; start = ts; bw.style.opacity = 0;
+          setTimeout(function(){ bw.textContent = 'breathe out'; bw.style.opacity = 1; }, 250); }
+        requestAnimationFrame(frame);
+      } else {
+        setP(1 - ease(Math.min(t/OUT,1)));
+        if (t >= OUT){ bw.style.opacity = 0; setTimeout(function(){ finish(); bw.style.opacity = 1; }, 250); }
+        else requestAnimationFrame(frame);
+      }
+    };
+    setTimeout(function(){ requestAnimationFrame(frame); }, 1400); /* let the page arrive first */
+    setTimeout(finish, IN + OUT + 4000);                          /* background-tab safety */
+  }
+  breathe.addEventListener('click', function(e){
+    if (!breathe.classList.contains('done')){ e.preventDefault(); finish(); }
+  });
+}
 
 /* Gentle lake parallax, desktop only */
 if (!reduce && window.innerWidth > 820){
