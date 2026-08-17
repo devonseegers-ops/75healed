@@ -464,7 +464,7 @@ footer{background:var(--sage-dark);padding:54px 56px;margin-top:96px;display:fle
         <li>Open <strong>Advanced Options</strong> and paste <strong>Exclude</strong> into the Exclude field.</li>
         <li>Press Create.</li>
       </ol>
-      <p class="suno-warn"><strong>If it comes back sung.</strong> Suno is a music model, so now and then it will ignore all of this and give you a dramatic vocal anyway. It's a tendency, not a setting. Just press Create again, the third field and the tag at the top of the lyrics make a spoken take much more likely, and the next roll usually lands. Keep the take where the voice just talks.</p>
+      <p class="suno-warn"><strong>If it comes back sung, or starts to build.</strong> Suno is a music model, so now and then it will ignore all of this and give you a dramatic vocal, or a voice that gets louder and more intense toward the end. It's a tendency, not a setting. Just press Create again. The Exclude field and the tag at the top of the lyrics make a calm spoken take much more likely, and the next roll usually lands. Keep the take where the voice just talks, and stays at one level the whole way through.</p>
       <div class="gen-row">
         <a class="btn-ghost" href="https://suno.com/create" target="_blank" rel="noopener">Open Suno</a>
         <button class="btn-ghost" id="again">New version</button>
@@ -542,7 +542,7 @@ var LIMIT_LYRIC = 5000;
 var MODES = [
   { id:'general', label:'General Healing', desc:'Balanced restoration, any time, any need.',
     atmosphere:'balanced and restorative, gently spacious',
-    ambience:'soft dawn air, a distant stillness, the faint hush of wind through leaves', close:'general' },
+    ambience:'soft dawn air, distant stillness, a faint hush of wind through leaves', close:'general' },
   { id:'sleep', label:'Sleep', desc:'Sedating, slow, sleep-friendly, for nights when rest is hard.',
     atmosphere:'sedating and sleep-friendly, unhurried, fading toward silence',
     ambience:'soft night ambience, distant water, low warm air', close:'sleep' },
@@ -593,8 +593,8 @@ var INFLUENCES = [
   { id:'direct', g:'hyp', on:false, slot:'late', drop:6,
     name:'Direct suggestion', desc:'Clear, unambiguous instruction',
     lines:[
-      'And now something plainer, said straight. Your body is healing. Your nervous system is settling. Each breath takes you further into rest. This is happening. You do not need to make it happen.',
-      'Let this land without decoration. You are safe. You are healing. The tension is leaving. Every breath from here makes it easier. That is simply what is occurring.'
+      'And now something plainer, said quietly. Your body is healing. Your nervous system is settling. Each breath takes you a little further into rest. It is already happening, and you do not need to make it happen.',
+      'Let this land softly, without decoration. You are safe. You are healing. The tension is leaving, a little at a time. Every breath from here makes it easier. That is simply what is happening, quietly, on its own.'
     ]},
   { id:'parts', g:'hyp', on:false, slot:'mid', drop:7,
     name:'Parts work', desc:'Meeting the part that is struggling',
@@ -690,8 +690,8 @@ var TUNE = [
     opts:[ {id:'match',  label:'Match the track', amb:null},
            {id:'ocean',  label:'Ocean',  amb:'distant ocean waves, slow and far away'},
            {id:'rain',   label:'Rain',   amb:'soft steady rain, no thunder'},
-           {id:'forest', label:'Forest', amb:'quiet forest air, leaves moving in a light wind'},
-           {id:'night',  label:'Night',  amb:'low night ambience, faint crickets very far off'},
+           {id:'forest', label:'Forest', amb:'quiet forest air, leaves in a light wind'},
+           {id:'night',  label:'Night',  amb:'low night ambience, faint crickets far off'},
            {id:'none',   label:'Silence', amb:'near silence, only a very low warm room tone'} ] },
 
   { key:'length', label:'Length', def:'standard',
@@ -886,6 +886,11 @@ var TRUST = [
   'There is an intelligence in you older than your thinking. It has healed every wound you have ever had. It has not stopped.',
   'The healing does not require your belief. It only requires that you stop getting in its way. And for these few minutes, you have.'
 ];
+var SETTLE_LATE = [
+  'And there is nothing to build toward here. Nothing is coming to a peak. It only gets quieter from this point. Softer. Slower. Let the voice, and the breath, and the whole of you, settle even lower.',
+  'Notice that nothing here needs to rise. There is no arrival to reach for. Everything from here is a gentle lowering. The breath a little slower. The body a little heavier. The words a little further away.',
+  'Let it stay level now. No climb. No push. Just the same soft ground, all the way to the end, and a little more quiet with every breath.'
+];
 var IDENTITY = [
   'And underneath all of this, something quieter. You are not someone who is broken and hoping to be fixed. You are someone whose body knows how to heal, and is doing it right now, in this moment, without needing supervision.',
   'Let this settle into who you are, not just what you are doing. A person who is healing. A person whose nervous system knows how to come home. That is not aspiration. That is a description.',
@@ -971,18 +976,17 @@ function buildStyle(mode, tune){
   var amb   = scape.amb || mode.ambience;
 
   var s =
-'Spoken word narration. Guided hypnosis recording. ASMR. Audiobook voiceover. ' +
-'Pure speaking voice from start to finish. No singing, no melody, no chorus, no rhythm, no beat. ' +
+'Spoken word narration, guided hypnosis, ASMR. Speaking voice only, start to finish. No singing, melody, chorus, or beat. ' +
+'Same low energy from first second to last. Nothing builds, rises, or peaks. The voice never gets louder, faster, higher, or more intense. If anything, softer and slower toward the end. ' +
 voice.style + ' ' + deliv.style + '. ' +
-'Completely flat and even delivery. Not theatrical, not dramatic, not performed, no announcer tone. ' +
-'Minimal ambient underscore only, kept far beneath the voice, no piano, no chords, no drums, no melodic instruments, no swells. ' +
-'Subtle natural ambience: ' + amb + '. ' +
+'Flat, even, one calm register. Not theatrical, not dramatic, no emphasis, no urgency. ' +
+'Minimal ambient underscore far beneath the voice, at one constant level. No piano, chords, drums, swells, or rises. ' +
+'Ambience: ' + amb + '. ' +
 (tune.chime === 'off'
-  ? 'No chimes and no bells. Unbroken, continuous soft ambience throughout. '
-  : 'A soft low chime every 5.5 seconds to pace the breathing, inhale for one chime, exhale for the next. ') +
-'Atmosphere: ' + mode.atmosphere + '. ' +
-'Long pauses and plenty of silence between phrases. ' +
-'Purpose: relaxation, radical acceptance, nervous system regulation, healing.';
+  ? 'No chimes or bells. '
+  : 'A soft low chime every 5.5 seconds pacing the breath, one in, one out. ') +
+'Atmosphere: ' + mode.atmosphere + '. Long pauses, plenty of silence. ' +
+'Purpose: relaxation, acceptance, nervous system regulation, healing.';
 
   if (s.length > LIMIT_STYLE) s = s.slice(0, LIMIT_STYLE - 1).replace(/\s+\S*$/,'') + '.';
   return s;
@@ -991,11 +995,14 @@ voice.style + ' ' + deliv.style + '. ' +
 /* Suno's Exclude field, under Custom \u2192 Advanced Options. Guidance rather
    than a hard filter, but it measurably reduces the sung takes. */
 function buildExclude(){
-  return 'singing, sung vocals, vocal melody, chorus, hook, verse, refrain, ' +
+  return 'singing, sung vocals, vocal melody, chorus, hook, verse, refrain, bridge, ' +
          'harmonies, backing vocals, choir, vocal runs, vibrato, belting, falsetto, autotune, ' +
          'rap, spoken-word poetry performance, theatrical narration, announcer voice, radio DJ, ' +
-         'drums, percussion, beat, bass, piano, guitar, strings, synth lead, orchestral swell, ' +
-         'crescendo, dramatic build, energetic, upbeat, cinematic trailer, heavy reverb on the voice';
+         'shouting, yelling, raised voice, loud, projecting, emphatic delivery, urgent delivery, ' +
+         'intense, passionate, emotional peak, climax, build-up, crescendo, dramatic build, rising energy, ' +
+         'escalation, swelling, dynamic contrast, big finish, epic, cinematic, cinematic trailer, ' +
+         'drums, percussion, beat, drop, bass, piano, guitar, strings, synth lead, orchestral swell, ' +
+         'energetic, upbeat, driving, anthemic, uplifting anthem, heavy reverb on the voice';
 }
 
 /* ── Lyrics field ───────────────────────────────── */
@@ -1103,6 +1110,9 @@ function buildLyrics(opts){
   add(pick(TRUST), 6);
   if (has('direct')) add(pick(inf('direct').lines), 6);
   if (!short) add(pick(IDENTITY), 7);
+  /* Late in the script is where a music model wants to build.
+     A quiet, in-text hold reminds it there is nowhere to go. Priority 10: never trimmed. */
+  add(pick(SETTLE_LATE), 10);
 
   var SIGNOFF = { general:'Be well', sleep:'Sleep well', sunrise:'Go gently', reset:'Go gently' };
   var closing = pick(CLOSE[opts.mode.close]);
@@ -1117,7 +1127,7 @@ function buildLyrics(opts){
   /* One leading tag. Suno treats a bracketed tag as a directive and does
      not vocalise it, this is the single strongest nudge away from singing.
      Exactly one, at the top, so there is nothing mid-script to misread. */
-  var TAG = '[Spoken narration, no singing]';
+  var TAG = '[Spoken narration, no singing, calm and even throughout, no build, no rise]';
   var render = function(list){ return TAG + '\n\n' + list.map(function(p){ return p.t; }).join('\n\n'); };
   var text = render(parts);
 
